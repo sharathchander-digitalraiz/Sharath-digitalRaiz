@@ -34,4 +34,4 @@ const customerSchema = mongoose.Schema({
   modified_date: String,
 },{timestamps:true});
 
-module.exports = mongoose.model("CustomerSchema", customerSchema);
+module.exports = mongoose.model("Customer_Schema", customerSchema);

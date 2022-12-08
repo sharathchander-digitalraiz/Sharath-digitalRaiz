@@ -37,6 +37,8 @@ const itemsRoute = require("./routers/settings/itemTypes"); //item types
 const stoneStorage = require("./routers/settings/stoneStorage"); //stone storage
 const beedsRoute = require("./routers/settings/beeds"); //beeds
 const orderRoute = require("./routers/order_mangement/orderRoute"); //orders
+const departement = require("./routers/employees/deptRoute"); //departments
+const bandiniadmin = require("./routers/order_mangement/Admin/bandiniAdmin"); //bandiniAdmin
 
 //final API endpoint
 app.use("/santhosh-jewellery", adminRoute); //for admin
@@ -47,6 +49,8 @@ app.use("/santhosh-jewellery", itemsRoute); //for item type
 app.use("/santhosh-jewellery", stoneStorage); //for stone storage
 app.use("/santhosh-jewellery", beedsRoute); //for beeds
 app.use("/santhosh-jewellery", orderRoute); //for orders
+app.use("/santhosh-jewellery", departement); //for department
+app.use("/santhosh-jewellery", bandiniadmin); //for bandiniAdmin
 
 app.listen(port, () => {
   console.log(`server running on http://127.0.0.1:${port}`);

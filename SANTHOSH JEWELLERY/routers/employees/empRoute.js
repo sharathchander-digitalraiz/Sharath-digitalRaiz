@@ -32,5 +32,6 @@ router.put(
   imgeUpload.uploadImage.single("avatar"),
   empController.updateEmployee
 );
-
+router.delete("/delete-employee/:id", empController.deleteEmp);
+router.get("/all-employees", empController.getAllEmployees);
 module.exports = router;

@@ -1,4 +1,5 @@
-const Schema = require("../../models/adminEmp/adminEmpSchema");
+const AdminEmpModel = require("../../models/adminEmp/adminEmpSchema");
+const DeptModel = require("../../models/adminEmp/departments");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
@@ -6,20 +7,22 @@ require("dotenv").config();
 //adding Employee(emp)
 exports.addEmp = function (req, res) {
   try {
-    Schema.findOne({ email: req.body.email }).exec((err, emp) => {
+    AdminEmpModel.findOne({ email: req.body.email }).exec(async (err, emp) => {
       if (emp) {
         return res
           .status(400)
           .json({ success: false, message: "employee/email is already exist" });
       }
-      const empAdded = new Schema({
+      const deptData = await DeptModel.findById({_id:req.body.department_Id},{deptName:1})
+      console.log(deptData)
+      const empAdded = new AdminEmpModel({
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
         phone: req.body.phone,
         password: bcrypt.hashSync(req.body.password, 10),
-        designation: req.body.designation,
-        department: req.body.department,
+        department_Id: req.body.department_Id,
+        designation: deptData.deptName,
         city: req.body.city,
         state: req.body.state,
         country: req.body.country,
@@ -46,7 +49,7 @@ exports.employeeLogin = async function (req, res) {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const empFound = await Schema.findOne({ email: email });
+    const empFound = await AdminEmpModel.findOne({ email: email });
     if (empFound) {
       const isMatch = await bcrypt.compare(password, empFound.password);
       if (isMatch) {
@@ -94,10 +97,10 @@ exports.employeeLogin = async function (req, res) {
   }
 };
 
-//get admin profile
+//get emp profile
 exports.getEmployee = async (req, res) => {
   try {
-    const empFound = await Schema.findById({ _id: req.admin });
+    const empFound = await AdminEmpModel.findById({ _id: req.admin });
     if (empFound) {
       res.status(200).json({ success: true, message: empFound });
     } else {
@@ -108,36 +111,64 @@ exports.getEmployee = async (req, res) => {
   }
 };
 
-//update admin  profile
+//update emp profile
 exports.updateEmployee = async function (req, res) {
   try {
-  let empFound = await Schema.findOneAndUpdate(
-    { _id: req.admin },
-    {
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      phone: req.body.phone,
-      designation: req.body.designation,
-      department: req.body.department,
-      city: req.body.city,
-      state: req.body.state,
-      country: req.body.country,
-      address: req.body.address,
-      avatar: req.file.path,
-      modified_by: req.body.modified_by,
-      modified_log_date: new Date().toISOString().slice(0, 10),
+    let empFound = await AdminEmpModel.findOneAndUpdate(
+      { _id: req.admin },
+      {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        phone: req.body.phone,
+        designation: req.body.designation,
+        department: req.body.department,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        address: req.body.address,
+        avatar: req.file.path,
+        modified_by: req.body.modified_by,
+        modified_log_date: new Date().toISOString().slice(0, 10),
+      }
+    );
+    if (empFound) {
+      res
+        .status(200)
+        .json({ success: true, message: "profile updated successfully" });
+    } else {
+      res
+        .status(400)
+        .json({ success: false, message: "unable to update profile" });
     }
-  );
-  if (empFound) {
-    res
-      .status(200)
-      .json({ success: true, message: "profile updated successfully" });
-  } else {
-    res
-      .status(400)
-      .json({ success: false, message: "unable to update profile" });
+  } catch (err) {
+    res.status(400).json({ success: false, message: err });
   }
+};
+
+//get all emp profile
+exports.getAllEmployees = async (req, res) => {
+  try {
+    const empsFound = await AdminEmpModel.find({});
+    if (empsFound) {
+      res.status(200).json({ success: true, message:"success", empsFound });
+    } else {
+      res.status(400).json({ success: false, message: "Bad request" });
+    }
+  } catch (err) {
+    res.status(400).json({ success: false, message: err });
+  }
+};
+
+//delete emp profile
+exports.deleteEmp = async (req, res) => {
+  try {
+    const empDeleted = await Schema.findByIdAndDelete({ _id: req.params.id });
+    if (empDeleted) {
+      res.status(200).json({ success: true, message:"successfully deleted" });
+    } else {
+      res.status(400).json({ success: false, message: "Bad request" });
+    }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }

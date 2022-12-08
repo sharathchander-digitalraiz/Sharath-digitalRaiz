@@ -4,3 +4,7 @@ An arrow function can not be used as constructors.
 An arrow function can not use yield within its body.
 Arrow function cannot be suitable for call apply and bind methods.
 
+==== For Schemas if its holding array of objects
+    //req.body.drawing_issued_to[0].dep //fist object
+    //req.body.drawing_issued_to[0].name //second object
+    //req.body.drawing_issued_to[0].image //third object

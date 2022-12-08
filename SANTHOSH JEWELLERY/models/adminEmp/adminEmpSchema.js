@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const schema = mongoose.Schema(
+const adminEmpModel = mongoose.Schema(
   {
     first_name: {
       type: String,
@@ -22,8 +22,11 @@ const schema = mongoose.Schema(
       trim: true,
       required: true,
     },
+    department_Id: {
+      type: mongoose.Schema.Types.ObjectId, ref:"Department",
+    },
     designation: String,
-    department:String,
+    departmentName: String,
     address: String,
     city: String,
     state: String,
@@ -32,8 +35,8 @@ const schema = mongoose.Schema(
     role: String,
     status: {
       type: String,
-      enum: ["active", "inactive"],
-      default: "active",
+      enum: ["Active", "In Active"],
+      default: "Active",
     },
     avatar: String,
     created_by: String,
@@ -44,4 +47,4 @@ const schema = mongoose.Schema(
   { timestamps: true }
 );
  
-module.exports = mongoose.model("Schema", schema);
+module.exports = mongoose.model("Admin_Emp_Model", adminEmpModel);

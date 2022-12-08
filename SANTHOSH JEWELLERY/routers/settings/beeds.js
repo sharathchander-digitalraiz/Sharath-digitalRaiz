@@ -5,7 +5,7 @@ const tokenVerify = require("../../middlewares/verifyToken");
 //beeds controllers
 const beeds = require("../../controllers/settings/beeds.controller");
 
-//items routes
+//beeds routes
 router.get("/all-beeds", tokenVerify.verifyToken, beeds.getAllBeeds);
 router.get("/search-beeds/:id", tokenVerify.verifyToken, beeds.getOneBeed);
 router.post("/add-beeds", tokenVerify.verifyToken, beeds.addBeeds);

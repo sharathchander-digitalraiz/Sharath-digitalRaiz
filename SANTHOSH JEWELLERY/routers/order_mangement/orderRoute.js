@@ -6,7 +6,7 @@ const verifyToken = require("../../middlewares/verifyToken");
 const multer = require("../../middlewares/multer")
 
 //controllers
-const orderController = require("../../controllers/order_management/orderManagement");
+const orderController = require("../../controllers/order_management/order");
 
 //API calls
 router.post(
