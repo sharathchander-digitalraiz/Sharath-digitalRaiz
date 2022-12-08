@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
-//adding admin
+//adding admins
 exports.addAdmin = function (req, res) {
   try {
   Schema.findOne({ email: req.body.email }).exec((err, admin) => {
