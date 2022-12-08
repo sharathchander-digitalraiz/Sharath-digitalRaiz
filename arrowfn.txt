@@ -1,0 +1,6 @@
+An arrow function doesn’t have its own bindings with this or super.
+An Arrow function should not be used as methods.
+An arrow function can not be used as constructors.
+An arrow function can not use yield within its body.
+Arrow function cannot be suitable for call apply and bind methods.
+
