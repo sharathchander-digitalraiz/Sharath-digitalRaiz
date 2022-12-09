@@ -1,9 +1,8 @@
-const BandiniAdmin = require("../../../models/order_management/Admin/bandiniAdmin");
+const CastingAdmin = require("../../../models/order_management/Admin/castingAdmin");
 const DeptModel = require("../../../models/adminEmp/departments");
 const employee = require("../../../models/adminEmp/adminEmpSchema");
-const { Query } = require("mongoose");
 
-//add BandiniAdmin
+//add CastingAdmin
 exports.addBandini = async function (req, res) {
   try {
     const deptData = await DeptModel.findById(
@@ -15,13 +14,16 @@ exports.addBandini = async function (req, res) {
       { first_name: 1 }
     );
 
-    const bandiniAdded = new BandiniAdmin({
+    const bandiniAdded = new CastingAdmin({
       date: req.body.date,
       department_Id: req.body.department_Id,
       designation: deptData.deptName,
       employee_id: req.body.employee_id,
       employee_name: empData.first_name,
-      item_wt_removed: req.body.item_wt_removed,
+      weight_out: req.body.weight_out,
+      finish_in: req.body.finish_in,
+      scrap_in: req.body.scrap_in,
+      loss: req.body.loss,
     }).save(function (err, data) {
       if (err) {
         res.status(200).json({ success: false, message: err });
@@ -47,8 +49,8 @@ exports.getEmpWithDept = async (req, res) => {
   }
 };
 
-//update BandiniAdmin
-exports.updateBandiniAdmin = async function (req, res) {
+//update CastingAdmin
+exports.updateCastingAdmin = async function (req, res) {
   try {
     const deptData = await DeptModel.findById(
       { _id: req.body.department_Id },
@@ -58,7 +60,7 @@ exports.updateBandiniAdmin = async function (req, res) {
       { _id: req.body.employee_id },
       { first_name: 1 }
     );
-    const BandiniAdminUpdated = await BandiniAdmin.findByIdAndUpdate(
+    const CastingAdminUpdated = await CastingAdmin.findByIdAndUpdate(
       { _id: req.params.id },
       {
         date: req.body.date,
@@ -66,10 +68,13 @@ exports.updateBandiniAdmin = async function (req, res) {
         designation: deptData.deptName,
         employee_id: req.body.employee_id,
         employee_name: empData.first_name,
-        item_wt_removed: req.body.item_wt_removed,
+        weight_out: req.body.weight_out,
+        finish_in: req.body.finish_in,
+        scrap_in: req.body.scrap_in,
+        loss: req.body.loss,
       }
     );
-    if (BandiniAdminUpdated) {
+    if (CastingAdminUpdated) {
       res.status(400).json({
         success: true,
         message: "updated successfull",
@@ -77,70 +82,70 @@ exports.updateBandiniAdmin = async function (req, res) {
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin not found" });
+        .json({ success: false, message: "CastingAdmin not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }
 };
 
-//get BandiniAdmin
-exports.getBandiniAdmin = async function (req, res) {
+//get CastingAdmin
+exports.getCastingAdmin = async function (req, res) {
   try {
-    const BandiniAdminData = await BandiniAdmin.findById({
+    const CastingAdminData = await CastingAdmin.findById({
       _id: req.params.id,
     });
-    if (BandiniAdminData) {
+    if (CastingAdminData) {
       res.status(400).json({
         success: true,
         message: "success",
-        BandiniAdminData,
+        CastingAdminData,
       });
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin data not found" });
+        .json({ success: false, message: "CastingAdmin data not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }
 };
 
-//getAll BandiniAdmin
-exports.getAllBandiniAdmin = async function (req, res) {
+//getAll CastingAdmin
+exports.getAllCastingAdmin = async function (req, res) {
   try {
-    const BandiniAdminsData = await BandiniAdmin.find();
-    if (BandiniAdminsData) {
+    const CastingAdminsData = await CastingAdmin.find();
+    if (CastingAdminsData) {
       res.status(400).json({
         success: true,
         message: "successfull",
-        BandiniAdminsData,
+        CastingAdminsData,
       });
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin data not found" });
+        .json({ success: false, message: "CastingAdmin data not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }
 };
 
-//delete BandiniAdmin
-exports.deleteBandiniAdmin = async function (req, res) {
+//delete CastingAdmin
+exports.deleteCastingAdmin = async function (req, res) {
   try {
-    const BandiniAdminDeleted = await BandiniAdmin.findByIdAndDelete({
+    const CastingAdminDeleted = await CastingAdmin.findByIdAndDelete({
       _id: req.params.id,
     });
-    if (BandiniAdminDeleted) {
+    if (CastingAdminDeleted) {
       res.status(400).json({
         success: true,
-        message: "BandiniAdmin data deleted successfull",
+        message: "CastingAdmin data deleted successfull",
       });
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin data not found" });
+        .json({ success: false, message: "CastingAdmin data not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
