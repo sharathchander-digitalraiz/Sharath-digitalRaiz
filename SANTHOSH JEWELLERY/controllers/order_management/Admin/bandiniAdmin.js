@@ -1,7 +1,6 @@
 const BandiniAdmin = require("../../../models/order_management/Admin/bandiniAdmin");
 const DeptModel = require("../../../models/adminEmp/departments");
 const employee = require("../../../models/adminEmp/adminEmpSchema");
-const { Query } = require("mongoose");
 
 //add BandiniAdmin
 exports.addBandini = async function (req, res) {
@@ -37,13 +36,22 @@ exports.addBandini = async function (req, res) {
 //get the list of employees based on dept id
 exports.getEmpWithDept = async (req, res) => {
   try {
-    const empData = employee.find(
-      { department_Id: req.body._id },
+    const empData = await employee.find(
+      { department_Id: req.body.id },
       { first_name: 1 }
     );
-    res.status(200).json({ success: true, message: "success", empData });
+    console.log(empData);
+    let empNames = [];
+    empData.map((name) => {
+      empNames.push(name.first_name);
+    });
+    if (empNames) {
+      res.status(200).json({ success: true, message: "success", empNames });
+    } else {
+      res.status(400).json({ success: false, message: "not found data" });
+    }
   } catch (err) {
-    res.status(400).json({ success: false, message: "bad request" });
+    res.status(400).json({ success: false, message: err });
   }
 };
 
@@ -93,7 +101,7 @@ exports.getBandiniAdmin = async function (req, res) {
     if (BandiniAdminData) {
       res.status(400).json({
         success: true,
-        message: "success",
+        message: "success",   
         BandiniAdminData,
       });
     } else {

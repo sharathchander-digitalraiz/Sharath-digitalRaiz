@@ -13,7 +13,6 @@ exports.addBandini = async function (req, res) {
       { _id: req.body.employee_id },
       { first_name: 1 }
     );
-
     const bandiniAdded = new CastingAdmin({
       date: req.body.date,
       department_Id: req.body.department_Id,
@@ -111,7 +110,7 @@ exports.getCastingAdmin = async function (req, res) {
   }
 };
 
-//getAll CastingAdmin
+//Get All Casting Admin
 exports.getAllCastingAdmin = async function (req, res) {
   try {
     const CastingAdminsData = await CastingAdmin.find();

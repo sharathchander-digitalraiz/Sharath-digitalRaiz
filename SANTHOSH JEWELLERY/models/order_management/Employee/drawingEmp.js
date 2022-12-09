@@ -2,19 +2,6 @@ const mongoose = require("mongoose");
 
 const drawing_recieved_from = mongoose.Schema(
   {
-    departement: {
-      type: String,
-      enum: [
-        "Admin",
-        "Manager",
-        "Accountant",
-        "Master of Jewelry Drawing",
-        "Auto-Cad Employee",
-        "Ghat Polish Employee",
-        "Setting Preparation Employee",
-        "Bandini Employee",
-        "Stone Detail/Bandini Manage Employee",
-    ]},
     name: String,
     status: {
       type: String,

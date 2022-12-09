@@ -1,24 +1,21 @@
 const mongoose = require("mongoose");
 
-const drawings_issued_to = mongoose.Schema({
-    departement: {
-      type: String,
-      enum: [
-        "Admin",
-        "Manager",
-        "Accountant",
-        "Master of Jewelry Drawing",
-        "Auto-Cad Employee",
-        "Ghat Polish Employee",
-        "Setting Preparation Employee",
-        "Bandini Employee",
-        "Stone Detail/Bandini Manage Employee",
-      ],
+const drawingAdmin = mongoose.Schema(
+  {
+    date: String,
+    department_Id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department",
     },
-    name: String,
-    image: String
+    designation: String,
+    employee_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin_Emp_Model",
+    },
+    employee_name: String,
+    image: String,
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Drawings_issued_to", drawings_issued_to);
+module.exports = mongoose.model("DrawingAdmin", drawingAdmin);

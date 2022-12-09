@@ -1,4 +1,4 @@
-const BandiniEmp = require("../../../models/order_management/Employee/bandiniEmp");
+const BandiniEmp = require("../../../models/order_management/Employee/");
 const DeptModel = require("../../../models/adminEmp/departments");
 const employee = require("../../../models/adminEmp/adminEmpSchema");
 

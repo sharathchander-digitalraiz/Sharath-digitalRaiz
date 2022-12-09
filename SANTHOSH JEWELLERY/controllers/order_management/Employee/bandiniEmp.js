@@ -3,10 +3,10 @@ const DeptModel = require("../../../models/adminEmp/departments");
 const employee = require("../../../models/adminEmp/adminEmpSchema");
 
 
-//add BandiniAdmin
+//add BandiniEmp
 exports.addBandini = async function (req, res) {
   try {
-    const bandiniAdded = new BandiniAdmin({
+    const bandiniAdded = new BandiniEmp({
       date: req.body.date,
       karigar: req.body.date,
       item_wt_add: req.body.item_wt_add,
@@ -38,8 +38,8 @@ exports.getEmpWithDept = async (req, res) => {
   }
 };
 
-//update BandiniAdmin
-exports.updateBandiniAdmin = async function (req, res) {
+//update BandiniEmp
+exports.updateBandiniEmp = async function (req, res) {
   try {
     const deptData = await DeptModel.findById(
       { _id: req.body.department_Id },
@@ -49,7 +49,7 @@ exports.updateBandiniAdmin = async function (req, res) {
       { _id: req.body.employee_id },
       { first_name: 1 }
     );
-    const BandiniAdminUpdated = await BandiniAdmin.findByIdAndUpdate(
+    const BandiniEmpUpdated = await BandiniEmp.findByIdAndUpdate(
       { _id: req.params.id },
       {
         date: req.body.date,
@@ -60,7 +60,7 @@ exports.updateBandiniAdmin = async function (req, res) {
         item_wt_removed: req.body.item_wt_removed,
       }
     );
-    if (BandiniAdminUpdated) {
+    if (BandiniEmpUpdated) {
       res.status(400).json({
         success: true,
         message: "updated successfull",
@@ -68,70 +68,70 @@ exports.updateBandiniAdmin = async function (req, res) {
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin not found" });
+        .json({ success: false, message: "BandiniEmp not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }
 };
 
-//get BandiniAdmin
-exports.getBandiniAdmin = async function (req, res) {
+//get BandiniEmp
+exports.getBandiniEmp = async function (req, res) {
   try {
-    const BandiniAdminData = await BandiniAdmin.findById({
+    const BandiniEmpData = await BandiniEmp.findById({
       _id: req.params.id,
     });
-    if (BandiniAdminData) {
+    if (BandiniEmpData) {
       res.status(400).json({
         success: true,
         message: "success",
-        BandiniAdminData,
+        BandiniEmpData,
       });
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin data not found" });
+        .json({ success: false, message: "BandiniEmp data not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }
 };
 
-//getAll BandiniAdmin
-exports.getAllBandiniAdmin = async function (req, res) {
+//getAll BandiniEmp
+exports.getAllBandiniEmp = async function (req, res) {
   try {
-    const BandiniAdminsData = await BandiniAdmin.find();
-    if (BandiniAdminsData) {
+    const BandiniEmpsData = await BandiniEmp.find();
+    if (BandiniEmpsData) {
       res.status(400).json({
         success: true,
         message: "successfull",
-        BandiniAdminsData,
+        BandiniEmpsData,
       });
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin data not found" });
+        .json({ success: false, message: "BandiniEmp data not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }
 };
 
-//delete BandiniAdmin
-exports.deleteBandiniAdmin = async function (req, res) {
+//delete BandiniEmp
+exports.deleteBandiniEmp = async function (req, res) {
   try {
-    const BandiniAdminDeleted = await BandiniAdmin.findByIdAndDelete({
+    const BandiniEmpDeleted = await BandiniEmp.findByIdAndDelete({
       _id: req.params.id,
     });
-    if (BandiniAdminDeleted) {
+    if (BandiniEmpDeleted) {
       res.status(400).json({
         success: true,
-        message: "BandiniAdmin data deleted successfull",
+        message: "BandiniEmp data deleted successfull",
       });
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin data not found" });
+        .json({ success: false, message: "BandiniEmp data not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });

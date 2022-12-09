@@ -14,7 +14,6 @@ exports.addEmp = function (req, res) {
           .json({ success: false, message: "employee/email is already exist" });
       }
       const deptData = await DeptModel.findById({_id:req.body.department_Id},{deptName:1})
-      console.log(deptData)
       const empAdded = new AdminEmpModel({
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -64,13 +63,7 @@ exports.employeeLogin = async function (req, res) {
             first_name: empFound.first_name,
             last_name: empFound.last_name,
             email: empFound.email,
-            phone: empFound.phone,
             designation: empFound.designation,
-            department: empFound.department,
-            city: empFound.city,
-            state: empFound.state,
-            country: empFound.country,
-            address: empFound.address,
             avatar: empFound.avatar,
           };
           return res
@@ -114,6 +107,7 @@ exports.getEmployee = async (req, res) => {
 //update emp profile
 exports.updateEmployee = async function (req, res) {
   try {
+    const deptData = await DeptModel.findById({_id:req.body.department_Id},{deptName:1})
     let empFound = await AdminEmpModel.findOneAndUpdate(
       { _id: req.admin },
       {
@@ -121,8 +115,8 @@ exports.updateEmployee = async function (req, res) {
         last_name: req.body.last_name,
         email: req.body.email,
         phone: req.body.phone,
-        designation: req.body.designation,
-        department: req.body.department,
+        department_Id: req.body.department_Id,
+        designation: deptData.deptName,
         city: req.body.city,
         state: req.body.state,
         country: req.body.country,
@@ -173,3 +167,34 @@ exports.deleteEmp = async (req, res) => {
     res.status(400).json({ success: false, message: err });
   }
 };
+
+
+
+// router.post('/users/logout', authenticate, async (req, res) => {
+//   try {
+//     const empFound = await AdminEmpModel.findById({ _id: req.admin });
+//     empFound.tokens = empFound.tokens.filter((token) =>{
+//        return token.token !== req.token 
+//       })
+//       jwt.invalidate(token);
+//       delete req.session.token;
+//       await req.user.save()
+//       res.send()
+//   } catch (error) {
+//       res.status(500).send()
+//   }
+// });
+
+// // //logout profile
+// exports.logoutEmploye = async (req, res) => {
+//   try {
+//     const empFound = await AdminEmpModel.findById({ _id: req.admin });
+//     if (empFound) {
+//       res.status(200).json({ success: true, message: empFound });
+//     } else {
+//       res.status(400).json({ success: false, message: "Bad request" });
+//     }
+//   } catch (err) {
+//     res.status(400).json({ success: false, message: err });
+//   }
+// };

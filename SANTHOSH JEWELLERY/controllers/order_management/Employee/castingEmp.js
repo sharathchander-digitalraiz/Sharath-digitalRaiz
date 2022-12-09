@@ -1,9 +1,9 @@
-const BandiniEmp = require("../../../models/order_management/Employee/bandiniEmp");
+const CastingEmp = require("../../../models/order_management/Employee/castingEmp");
 const DeptModel = require("../../../models/adminEmp/departments");
 const employee = require("../../../models/adminEmp/adminEmpSchema");
 
 
-//add BandiniAdmin
+//add CastingEmp
 exports.addBandini = async function (req, res) {
   try {
     const deptData = await DeptModel.findById(
@@ -15,7 +15,7 @@ exports.addBandini = async function (req, res) {
       { first_name: 1 }
     );
 
-    const bandiniAdded = new BandiniAdmin({
+    const bandiniAdded = new CastingEmp({
       date: req.body.date,
       karigar: req.body.date,
       item_wt_add: req.body.item_wt_add,
@@ -47,8 +47,8 @@ exports.getEmpWithDept = async (req, res) => {
   }
 };
 
-//update BandiniAdmin
-exports.updateBandiniAdmin = async function (req, res) {
+//update CastingEmp
+exports.updateCastingEmp = async function (req, res) {
   try {
     const deptData = await DeptModel.findById(
       { _id: req.body.department_Id },
@@ -58,7 +58,7 @@ exports.updateBandiniAdmin = async function (req, res) {
       { _id: req.body.employee_id },
       { first_name: 1 }
     );
-    const BandiniAdminUpdated = await BandiniAdmin.findByIdAndUpdate(
+    const CastingEmpUpdated = await CastingEmp.findByIdAndUpdate(
       { _id: req.params.id },
       {
         date: req.body.date,
@@ -69,7 +69,7 @@ exports.updateBandiniAdmin = async function (req, res) {
         item_wt_removed: req.body.item_wt_removed,
       }
     );
-    if (BandiniAdminUpdated) {
+    if (CastingEmpUpdated) {
       res.status(400).json({
         success: true,
         message: "updated successfull",
@@ -77,70 +77,70 @@ exports.updateBandiniAdmin = async function (req, res) {
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin not found" });
+        .json({ success: false, message: "CastingEmp not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }
 };
 
-//get BandiniAdmin
-exports.getBandiniAdmin = async function (req, res) {
+//get CastingEmp
+exports.getCastingEmp = async function (req, res) {
   try {
-    const BandiniAdminData = await BandiniAdmin.findById({
+    const CastingEmpData = await CastingEmp.findById({
       _id: req.params.id,
     });
-    if (BandiniAdminData) {
+    if (CastingEmpData) {
       res.status(400).json({
         success: true,
         message: "success",
-        BandiniAdminData,
+        CastingEmpData,
       });
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin data not found" });
+        .json({ success: false, message: "CastingEmp data not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }
 };
 
-//getAll BandiniAdmin
-exports.getAllBandiniAdmin = async function (req, res) {
+//getAll CastingEmp
+exports.getAllCastingEmp = async function (req, res) {
   try {
-    const BandiniAdminsData = await BandiniAdmin.find();
-    if (BandiniAdminsData) {
+    const CastingEmpsData = await CastingEmp.find();
+    if (CastingEmpsData) {
       res.status(400).json({
         success: true,
         message: "successfull",
-        BandiniAdminsData,
+        CastingEmpsData,
       });
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin data not found" });
+        .json({ success: false, message: "CastingEmp data not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
   }
 };
 
-//delete BandiniAdmin
-exports.deleteBandiniAdmin = async function (req, res) {
+//delete CastingEmp
+exports.deleteCastingEmp = async function (req, res) {
   try {
-    const BandiniAdminDeleted = await BandiniAdmin.findByIdAndDelete({
+    const CastingEmpDeleted = await CastingEmp.findByIdAndDelete({
       _id: req.params.id,
     });
-    if (BandiniAdminDeleted) {
+    if (CastingEmpDeleted) {
       res.status(400).json({
         success: true,
-        message: "BandiniAdmin data deleted successfull",
+        message: "CastingEmp data deleted successfull",
       });
     } else {
       res
         .status(400)
-        .json({ success: false, message: "BandiniAdmin data not found" });
+        .json({ success: false, message: "CastingEmp data not found" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });

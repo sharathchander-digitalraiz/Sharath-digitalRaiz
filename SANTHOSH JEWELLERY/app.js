@@ -52,6 +52,15 @@ app.use("/santhosh-jewellery", orderRoute); //for orders
 app.use("/santhosh-jewellery", departement); //for department
 app.use("/santhosh-jewellery", bandiniadmin); //for bandiniAdmin
 
+//other
+const exp = require("./income_expenditure/router/expenditure");
+const infra = require("./income_expenditure/router/infra");
+const purchases = require("./income_expenditure/router/purchases")
+
+app.use("/",exp)
+app.use("/",infra)
+app.use("/",purchases)
+
 app.listen(port, () => {
   console.log(`server running on http://127.0.0.1:${port}`);
 });

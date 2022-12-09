@@ -7,6 +7,7 @@ const bandiniAdmin = require("../../../controllers/order_management/Admin/bandin
 
 //bandiniAdmin routes
 router.get("/all-bandini", tokenVerify.verifyToken, bandiniAdmin.getAllBandiniAdmin);
+router.get("/all-bandini-in-department", tokenVerify.verifyToken, bandiniAdmin.getEmpWithDept);
 router.get("/search-bandini/:id", tokenVerify.verifyToken, bandiniAdmin.getBandiniAdmin);
 router.post("/add-bandini", tokenVerify.verifyToken, bandiniAdmin.addBandini);
 router.put("/edit-bandini/:id", tokenVerify.verifyToken, bandiniAdmin.updateBandiniAdmin);
