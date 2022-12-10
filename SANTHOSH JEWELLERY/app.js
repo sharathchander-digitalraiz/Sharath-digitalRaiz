@@ -39,6 +39,10 @@ const beedsRoute = require("./routers/settings/beeds"); //beeds
 const orderRoute = require("./routers/order_mangement/orderRoute"); //orders
 const departement = require("./routers/employees/deptRoute"); //departments
 const bandiniadmin = require("./routers/order_mangement/Admin/bandiniAdmin"); //bandiniAdmin
+const catogeory = require("./routers/Incomes-Expenditure/catogeory"); //catogeory
+const subCategory = require("./routers/Incomes-Expenditure/subCategory") //subCategory
+const types = require("./routers/Incomes-Expenditure/types"); //types
+const role = require("./routers/employees/roles") //role
 
 //final API endpoint
 app.use("/santhosh-jewellery", adminRoute); //for admin
@@ -51,15 +55,10 @@ app.use("/santhosh-jewellery", beedsRoute); //for beeds
 app.use("/santhosh-jewellery", orderRoute); //for orders
 app.use("/santhosh-jewellery", departement); //for department
 app.use("/santhosh-jewellery", bandiniadmin); //for bandiniAdmin
-
-//other
-const exp = require("./income_expenditure/router/expenditure");
-const infra = require("./income_expenditure/router/infra");
-const purchases = require("./income_expenditure/router/purchases")
-
-app.use("/",exp)
-app.use("/",infra)
-app.use("/",purchases)
+app.use("/santhosh-jewellery", catogeory); //for catogeory
+app.use("/santhosh-jewellery", subCategory); //for subCategory
+app.use("/santhosh-jewellery", types); //for types
+app.use("/santhosh-jewellery", role); //for role
 
 app.listen(port, () => {
   console.log(`server running on http://127.0.0.1:${port}`);

@@ -24,8 +24,8 @@ exports.addAdmin = function (req, res) {
         avatar: req.file.path,
         role: req.body.role,
         password: bcrypt.hashSync(req.body.password, 10),
-        created_by: req.body.created_by,
         role: req.body.role,
+        created_by: req.body.created_by,
         created_log_date: new Date().toISOString().slice(0, 10),
       }).save(function (err, data) {
         if (err) {
