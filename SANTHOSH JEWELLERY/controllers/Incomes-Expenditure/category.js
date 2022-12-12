@@ -77,7 +77,7 @@ exports.editCategory = async function (req, res) {
     const CategoryUpdated = await Category.findByIdAndUpdate({_id: req.params.id,},
       {
         category_name: req.body.category_name,
-        modified_by: data,
+        modified_by: employeeData.first_name,
         modified_log_date: new Date().toISOString().slice(0, 10),
       }
     );

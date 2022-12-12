@@ -37,5 +37,4 @@ router.delete(
     orderController.deleteOrder
   );
 
-
 module.exports = router;

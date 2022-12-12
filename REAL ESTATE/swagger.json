@@ -1,0 +1,69 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "This is API documentation for realstate",
+		"version": "1.1.0",
+		"license": {
+			"name": "Apache 2.0",
+			"url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+		},
+		"title": "Realstate API documentaion",
+		"contact": {
+			"email": "info@digitalraiz.com",
+			"name": "Digital Raiz Creative Solutions Pvt. Ltd.",
+			"url": "https://www.digitalraiz.co.in/"
+		}
+	},
+	"schemes": [
+		"http",
+		"https"
+	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"paths": {
+		"/": {
+			"get": {
+				"tags": [
+					"Initial Route"
+				],
+				"description": "This is initial Routes",
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		}
+	},
+	"basePath": "/v1/",
+	"host": "localhost:5015",
+	"securityDefinitions": {
+		"bearerAuth": {
+			"type": "apiKey",
+			"in": "header",
+			"name": "authorization",
+			"description": "Please Enter bearer token in this format Bearer <token>"
+		}
+	},
+	"security": [
+		{
+			"bearerAuth": []
+		}
+	],
+	"definitions": {
+		"Admin": {
+			"type": "object",
+			"properties": {
+				"_id": {
+					"type": "string",
+					"example": "754845AmfdakjlkMKdf",
+					"description": "Mongodb Id"
+				}
+			}
+		}
+	}
+}

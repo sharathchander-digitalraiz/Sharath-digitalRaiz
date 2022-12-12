@@ -68,7 +68,7 @@ exports.employeeLogin = async function (req, res) {
           };
           return res
             .status(200)
-            .json({ success: true, empDetails, token: token });
+            .json({ success: true, message: "successfully logged in.",empDetails, token: token });
         } else {
           res.status(400).send({
             success: false,
@@ -78,12 +78,12 @@ exports.employeeLogin = async function (req, res) {
       } else {
         res
           .status(400)
-          .send({ success: false, message: "you entered wrong password" });
+          .send({ success: false, message: "The password you entered was incorrect. " });
       }
     } else {
       res
         .status(400)
-        .send({ success: false, message: "you entered wrong username" });
+        .send({ success: false, message: "The email you entered was incorrect." });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
@@ -95,7 +95,7 @@ exports.getEmployee = async (req, res) => {
   try {
     const empFound = await AdminEmpModel.findById({ _id: req.admin });
     if (empFound) {
-      res.status(200).json({ success: true, message: empFound });
+      res.status(200).json({ success: true, message:"successfully retrieved the data", empFound });
     } else {
       res.status(400).json({ success: false, message: "Bad request" });
     }
@@ -133,7 +133,7 @@ exports.updateEmployee = async function (req, res) {
     } else {
       res
         .status(400)
-        .json({ success: false, message: "unable to update profile" });
+        .json({ success: false, message: "unable to update your profile" });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err });
@@ -145,7 +145,7 @@ exports.getAllEmployees = async (req, res) => {
   try {
     const empsFound = await AdminEmpModel.find({});
     if (empsFound) {
-      res.status(200).json({ success: true, message:"success", empsFound });
+      res.status(200).json({ success: true, message:"successfully retrieved the data", empsFound });
     } else {
       res.status(400).json({ success: false, message: "Bad request" });
     }

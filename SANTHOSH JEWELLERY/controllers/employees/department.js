@@ -21,23 +21,23 @@ exports.addDepartement = async (req, res) => {
 };
 
 //get one Departement
-exports.getOneDepartement= async (req, res) => {
-  try {
-    const departementData = await Departement.findById({ _id: req.params.id });
-    if (departementData) {
-      res
-        .status(200)
-        .json({ success: true, message: "successfull", departementData });
-    } else {
-      res.status(400).json({
-        success: false,
-        message: "something went wrong unable to find",
-      });
-    }
-  } catch (err) {
-    res.status(400).json({ success: false, message: err });
-  }
-};
+// exports.getOneDepartement= async (req, res) => {
+//   try {
+//     const departementData = await Departement.findById({ _id: req.params.id });
+//     if (departementData) {
+//       res
+//         .status(200)
+//         .json({ success: true, message: "successfull", departementData });
+//     } else {
+//       res.status(400).json({
+//         success: false,
+//         message: "something went wrong unable to find",
+//       });
+//     }
+//   } catch (err) {
+//     res.status(400).json({ success: false, message: err });
+//   }
+// };
 
 //get all Departement
 exports.getAllDepartement = async (req, res) => {
@@ -57,6 +57,24 @@ exports.getAllDepartement = async (req, res) => {
       res.status(400).json({ success: false, message: err });
     }
   };
+
+  exports.getOneDepartement = async(req,res)=>{
+   try{
+     const  plotDetails = await Departement.find({
+        "$or":[
+          {deptName:{$regex:req.params.key}},
+        ]
+       })
+       console.log(plotDetails)
+       if(plotDetails){
+        res.status(200).json({success:true, message:"data successfully retrieved. ",plotDetails});
+       }else{
+        res.status(400).json({success:false, message:"no data found "});
+       }
+    }catch(err){
+        res.status(400).json({success:false, message:"something went wrong ", Error:err});
+    }
+  }
 
 //edit Departement
 exports.editDepartement = async (req, res) => {

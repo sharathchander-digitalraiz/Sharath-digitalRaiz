@@ -43,6 +43,7 @@ const catogeory = require("./routers/Incomes-Expenditure/catogeory"); //catogeor
 const subCategory = require("./routers/Incomes-Expenditure/subCategory") //subCategory
 const types = require("./routers/Incomes-Expenditure/types"); //types
 const role = require("./routers/employees/roles") //role
+const transaction = require("./routers/Incomes-Expenditure/transaction") //transaction
 
 //final API endpoint
 app.use("/santhosh-jewellery", adminRoute); //for admin
@@ -59,6 +60,7 @@ app.use("/santhosh-jewellery", catogeory); //for catogeory
 app.use("/santhosh-jewellery", subCategory); //for subCategory
 app.use("/santhosh-jewellery", types); //for types
 app.use("/santhosh-jewellery", role); //for role
+app.use("/santhosh-jewellery", transaction); //for transaction
 
 app.listen(port, () => {
   console.log(`server running on http://127.0.0.1:${port}`);

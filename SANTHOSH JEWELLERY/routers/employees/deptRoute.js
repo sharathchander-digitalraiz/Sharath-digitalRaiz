@@ -15,7 +15,7 @@ router.get(
   deptController.getAllDepartement
 );
 router.get(
-  "/search-department/:id",
+  "/search-department/:key",
   verifyToken.verifyToken,
   deptController.getOneDepartement
 );

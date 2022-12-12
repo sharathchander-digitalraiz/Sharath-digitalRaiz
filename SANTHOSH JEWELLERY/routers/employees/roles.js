@@ -3,8 +3,7 @@ const router = express.Router();
 const token = require("../../middlewares/verifyToken");
 
 //roles controllers
-const roles = require("../../controllers/employees/roles")
-;
+const roles = require("../../controllers/employees/roles");
 //roleAdmin routes
 router.get("/all-role", token.verifyToken, roles.getAllRoles);
 router.get("/search-role/:id", token.verifyToken, roles.getRoleById);
