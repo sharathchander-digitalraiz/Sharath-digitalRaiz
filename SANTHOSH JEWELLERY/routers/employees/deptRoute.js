@@ -18,7 +18,12 @@ router.get(
   "/search-department/:key",
   verifyToken.verifyToken,
   deptController.getOneDepartement
-);
+);//get by key through params
+router.get(
+  "/search-department/:key",
+  verifyToken.verifyToken,
+  deptController.getOneDeptById
+); //get by id
 router.post(
   "/add-department",
   verifyToken.verifyToken,
