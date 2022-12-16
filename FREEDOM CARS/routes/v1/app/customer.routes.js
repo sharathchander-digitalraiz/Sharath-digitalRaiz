@@ -59,4 +59,29 @@ custAppRoute.put(
   upload_userImages.single('avatar'),
   customrapp.editCustomerDetails
 );
+
+/***************customer withdrawal request App side************/
+custAppRoute.put(
+  "/withdrawal-wallet",
+  verifyAdminToken,
+  customrapp.withdrawalWalletAmount
+);
+
+/***************customer forgot password App side************/
+//sent OTP
+custAppRoute.post(
+  "/otp-request",
+  customrapp.generateOtp
+);
+//compare OTP
+custAppRoute.post(
+  "/otp-check",
+  customrapp.compareOtp
+);
+
+//reset password
+custAppRoute.post(
+  "/reset-password",
+  customrapp.resetPassword
+);
 module.exports = custAppRoute;

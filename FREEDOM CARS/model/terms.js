@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 const termsAndConditions = new mongoose.Schema({
+  customerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
   license: {
     type: String,
-    required: true,
   },
   terms_conditions: {
     type: String,
-    required: true,
   },
   privacy_policy: {
     type: String

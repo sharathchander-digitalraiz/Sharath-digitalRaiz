@@ -5,8 +5,8 @@ const carBrandModel = require("../../model/carBrand");
 const carPriceMOdel = require("../../model/carprice");
 const carprice = require("../../model/carprice");
 const paymentMOdel = require("../../model/payment");
-var mongoose = require('mongoose');
-var couponsMOdel =require("../../model/coupon_model");
+var mongoose = require("mongoose");
+var couponsMOdel = require("../../model/coupon_model");
 
 exports.addBooking = async function (req, res) {
   // try {
@@ -27,17 +27,12 @@ exports.addBooking = async function (req, res) {
     console.log(cId);
   }
 
-  const car = await camr.findOne(
-    { _id: req.body.carId }
-  );
+  const car = await camr.findOne({ _id: req.body.carId });
 
   console.log(car);
-  const carbrand = await carBrandModel.findOne(
-    { _id: car.carBrandId },
-  );
+  const carbrand = await carBrandModel.findOne({ _id: car.carBrandId });
 
   //const carPrice = await carPriceMOdel.findOne({_id: req.body.carPriceId});
-
 
   let condition = {};
   let getvariables = { _id: 1, kms: 1 };
@@ -59,11 +54,8 @@ exports.addBooking = async function (req, res) {
   }
   //const carPrice = await carPriceMOdel.findOne(condition,getvariables);
 
-
   console.log("carPrice");
-  const carmodel = await carModel.findOne(
-    { _id: car.carModelId }
-  );
+  const carmodel = await carModel.findOne({ _id: car.carModelId });
   console.log(carmodel);
 
   let logDate = new Date().toISOString();
@@ -73,10 +65,6 @@ exports.addBooking = async function (req, res) {
   var datesCOunt = datediff(req.body.fromDate, req.body.toDate);
 
   var payments = {};
-
-
-
-
 
   //var gst=((carPrice.price*datesCOunt)*1)/100;
   const bookingObj = new BookingModel({
@@ -99,14 +87,14 @@ exports.addBooking = async function (req, res) {
     date: todaye,
     logDateCreated: logDate,
     status: "pending",
-    reason: ''
+    reason: "",
   });
   bookingObj.save(function (er, data) {
     if (er) {
       res.status(400).json({
         success: false,
         message: "Booking could not be done",
-        Error: er
+        Error: er,
       });
     }
     if (data) {
@@ -126,13 +114,11 @@ exports.addBooking = async function (req, res) {
       payments.transactionId = null;
       const paymnetbs = new paymentMOdel(payments).save();
 
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Booking added successfully",
-          data: data
-        });
+      res.status(200).json({
+        success: true,
+        message: "Booking added successfully",
+        data: data,
+      });
     }
   });
   // } catch (err) {
@@ -145,8 +131,6 @@ exports.addBooking = async function (req, res) {
 function datediff(first, second) {
   return Math.round((second - first) / (1000 * 60 * 60 * 24));
 }
-
-
 
 exports.getcarprice = async function (req, res) {
   try {
@@ -169,14 +153,11 @@ exports.getcarprice = async function (req, res) {
         break;
     }
     const carPrice = await carPriceMOdel.find(condition, getvariables);
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Completed successfully",
-        data: carPrice
-      });
-
+    res.status(200).json({
+      success: true,
+      message: "Completed successfully",
+      data: carPrice,
+    });
   } catch (err) {
     res
       .status(400)
@@ -184,12 +165,12 @@ exports.getcarprice = async function (req, res) {
   }
 };
 
-
-
 exports.UpdatePayment = async function (req, res) {
   // try {
   const { transactionId, bookingId, paytype, status } = req.body;
-  const counts = await BookingModel.findOne({ _id: bookingId }).countDocuments();
+  const counts = await BookingModel.findOne({
+    _id: bookingId,
+  }).countDocuments();
   console.log(counts);
   var result = "hello";
   switch (counts) {
@@ -204,18 +185,21 @@ exports.UpdatePayment = async function (req, res) {
   console.log("result");
   console.log(result);
   if (result == "1") {
-    res.status(200).json({ success: true, message: "Booking Successfully Completed" });
-  }
-  else if (result == "2") {
-    res.status(200).json({ success: true, message: "Something went wrong.please try again" });
-  }
-  else if (result == "3") {
+    res
+      .status(200)
+      .json({ success: true, message: "Booking Successfully Completed" });
+  } else if (result == "2") {
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Something went wrong.please try again",
+      });
+  } else if (result == "3") {
     res.status(200).json({ success: true, message: "Payment Failure" });
-  }
-  else {
+  } else {
     res.status(200).json({ success: true, message: "Invalid Booking Details" });
   }
-
 
   // } catch (err) {
   //   res
@@ -224,9 +208,8 @@ exports.UpdatePayment = async function (req, res) {
   // }
 };
 
-
 async function functionUpdate(transactionId, bookingId, paytype, status) {
-  var success = '';
+  var success = "";
   switch (status) {
     case "success":
       const res = await BookingModel.updateOne(
@@ -234,17 +217,16 @@ async function functionUpdate(transactionId, bookingId, paytype, status) {
         {
           $set: {
             status: "accepted",
-            logDateModified: new Date().toISOString()
-          }
+            logDateModified: new Date().toISOString(),
+          },
         },
         { new: true }
       );
-      var psysta = '';
-      if (paytype == '0') {
-        psysta = 'partialcompleted';
-      }
-      else {
-        psysta = 'completed';
+      var psysta = "";
+      if (paytype == "0") {
+        psysta = "partialcompleted";
+      } else {
+        psysta = "completed";
       }
       const res2 = await paymentMOdel.updateOne(
         { bookingId: bookingId },
@@ -252,16 +234,15 @@ async function functionUpdate(transactionId, bookingId, paytype, status) {
           $set: {
             status: psysta,
             transactionId: transactionId,
-            logDateModified: new Date().toISOString()
-          }
+            logDateModified: new Date().toISOString(),
+          },
         },
         { new: true }
       );
 
       if (res2) {
         success = "1";
-      }
-      else {
+      } else {
         success = "2";
       }
       break;
@@ -270,24 +251,22 @@ async function functionUpdate(transactionId, bookingId, paytype, status) {
       break;
   }
   return success;
-
 }
-
 
 // get dashboard items
 exports.getmybookings = async function (req, res) {
   try {
     let bookings = await BookingModel.aggregate([
       {
-        "$match": { customerId: mongoose.Types.ObjectId(req.userId) }
+        $match: { customerId: mongoose.Types.ObjectId(req.userId) },
       },
       {
         $lookup: {
-          from: "cars",       // other table name
-          localField: "carId",   // name of users table field
+          from: "cars", // other table name
+          localField: "carId", // name of users table field
           foreignField: "_id", // name of userinfo table field
-          as: "carsDetails"         // alias for userinfo table
-        }
+          as: "carsDetails", // alias for userinfo table
+        },
       },
       { $unwind: "$carsDetails" },
       {
@@ -310,34 +289,38 @@ exports.getmybookings = async function (req, res) {
           status: 1,
           paymentStatus: 1,
           securityDepositStatus: 1,
-          cars: "$carsDetails"
-          // seater:"$carmodels.noOfSeats", 
-        }
-      }
-
-    ])
-    res.status(200).json({ success: true, message: "completed successfully", "bookings": bookings });
+          cars: "$carsDetails",
+          // seater:"$carmodels.noOfSeats",
+        },
+      },
+    ]);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "completed successfully",
+        bookings: bookings,
+      });
   } catch (err) {
     res
       .status(400)
       .json({ success: false, message: "Something went wrong..!" });
   }
-
-}
+};
 
 exports.getmyhistory = async function (req, res) {
   try {
     let bookings = await BookingModel.aggregate([
       {
-        "$match": { customerId: mongoose.Types.ObjectId(req.userId) }
+        $match: { customerId: mongoose.Types.ObjectId(req.userId) },
       },
       {
         $lookup: {
-          from: "cars",       // other table name
-          localField: "carId",   // name of users table field
+          from: "cars", // other table name
+          localField: "carId", // name of users table field
           foreignField: "_id", // name of userinfo table field
-          as: "carsDetails"         // alias for userinfo table
-        }
+          as: "carsDetails", // alias for userinfo table
+        },
       },
       { $unwind: "$carsDetails" },
       {
@@ -360,19 +343,60 @@ exports.getmyhistory = async function (req, res) {
           status: 1,
           paymentStatus: 1,
           securityDepositStatus: 1,
-          cars: "$carsDetails"
-          // seater:"$carmodels.noOfSeats", 
-        }
-      }
-    ])
-    res.status(200).json({ success: true, message: "completed successfully", "bookings": bookings });
+          cars: "$carsDetails",
+          // seater:"$carmodels.noOfSeats",
+        },
+      },
+    ]);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "completed successfully",
+        bookings: bookings,
+      });
   } catch (err) {
     res
       .status(400)
       .json({ success: false, message: "Something went wrong..!" });
   }
+};
 
-}
+exports.coupons = async function (req, res) {
+  try {
+    let todaye = new Date().toISOString().slice(0, 10);
+
+    console.log(todaye);
+    let condition = {
+      from_date: {
+        $lte: todaye,
+      },
+      to_date: {
+        $gte: todaye,
+      },
+    };
+    let coupons = await couponsMOdel.find(condition, {
+      title: 1,
+      coupon_code: 1,
+      amount: 1,
+      from_date: 1,
+      to_date: 1,
+      status: 1,
+      description: 1,
+    });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "completed successfully",
+        coupons: coupons,
+      });
+  } catch (err) {
+    res
+      .status(400)
+      .json({ success: false, message: "Something went wrong..!" });
+  }
+};
 
 // exports.drivepoints = async function (req, res) {
 //  // try {
@@ -391,11 +415,11 @@ exports.getmyhistory = async function (req, res) {
 //       ]);
 
 //     let points = await BookingModel.find(
-//       { customerId: mongoose.Types.ObjectId(req.userId), }, 
+//       { customerId: mongoose.Types.ObjectId(req.userId), },
 //     { drivepoints: 1, logDateModified: 1, booking_id: 1 });
 
 //     res.status(200).json({ success: true, sumpoints:sumpoints,message: "completed successfully", "points": points });
-//  } 
+//  }
 //   // catch (err) {
 //   //   res
 //   //     .status(400)
@@ -404,48 +428,28 @@ exports.getmyhistory = async function (req, res) {
 
 // }
 
-
-exports.coupons = async function (req, res) {
+//get with sum of all drive points
+exports.drivepoints = async (req, res) => {
   try {
-    let todaye = new Date().toISOString().slice(0, 10);
+    let sumpoints = await BookingModel.aggregate([
+      { $match: { customerId: mongoose.Types.ObjectId(req.userId) } },
 
-    console.log(todaye);
-    let condition={
-    from_date: {
-      "$lte": todaye,
-      
-    },
-    to_date: {
-      "$gte": todaye
+      {
+        $group: {
+          _id: { customerId: "$customerId" },
+          totalpoints: { $sum: { $toInt: "$drivepoints" } },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    if (sumpoints) {
+      res
+        .status(200)
+        .json({ success: true, message: "successfull retreived", sumpoints });
     }
-  }
-    ;
-    let coupons = await couponsMOdel.find(condition,
-      { title: 1, coupon_code: 1, amount: 1,from_date:1,to_date:1,status:1,description:1})
-    res.status(200).json({ success: true, message: "completed successfully", "coupons": coupons });
   } catch (err) {
     res
       .status(400)
       .json({ success: false, message: "Something went wrong..!" });
   }
-
-}
-
-//get with sum of all drive points
-exports.drivepoints = async(req,res)=>{
-  // try{
-    
-    let sumpoints = await BookingModel.aggregate(
-      [ 
-        { $match:{ customerId:mongoose.Types.ObjectId(req.userId)}}, 
-        { $group:{ _id:{ customerId:'$customerId'}, totalpoints:{ $sum:{  $toInt: "$drivepoints" } }, count: { $sum: 1 } }
-    }]
-);
-    if(sumpoints){
-    res.status(200).json({ success: true, message: "successfull" ,sumpoints});
-    }
-  // }catch(err){
-  //   res.status(400).json({ success: false, message: "Something went wrong..!" });
-  // }
-} 
-
+};

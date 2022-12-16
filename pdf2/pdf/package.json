@@ -1,0 +1,29 @@
+{
+  "name": "pdf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "print": "node print.js"
+  },
+  "keywords": [
+    "NodeJS",
+    "Puppeteer",
+    "ExpressJS",
+    "EJS",
+    "TailwindCSS"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "fs-extra": "^11.1.0",
+    "hbs": "^4.2.0",
+    "mongoose": "^6.8.0",
+    "nodemon": "^2.0.20",
+    "puppeteer": "^19.4.0"
+  }
+}

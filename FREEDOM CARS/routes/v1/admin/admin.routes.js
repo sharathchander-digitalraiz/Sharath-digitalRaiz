@@ -25,6 +25,7 @@ const coupon_router = require("./coupon.routes");
 const specRoute = require("./carSpecs.routes");
 const bookingRoute = require("./booking.routes");
 const securityDeposit = require("./securityDeposite.route");
+const invoice = require("./invoice.router")
 
 // defining routes
 adminRoute.get("/", function (req, res) {
@@ -130,5 +131,7 @@ adminRoute.use("/carbooking", bookingRoute);
 /*********security dposite *******/
 adminRoute.use("/security", securityDeposit);
 
+/*********invoice repoprt*******/
+adminRoute.use("invoice",invoice);
 
 module.exports = adminRoute;

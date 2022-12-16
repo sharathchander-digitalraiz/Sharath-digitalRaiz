@@ -7,7 +7,7 @@ const superadminModel = require("../../model/superadminAuth");
 
 // add/signup super admin
 exports.superAdminSignup = function (req, res) {
-  // try {
+  try {
     superadminModel
       .findOne({ email: req.body.email })
       .exec(function (er, user) {
@@ -41,9 +41,9 @@ exports.superAdminSignup = function (req, res) {
           });
         }
       });
-  // } catch (err) {
-  //   res.status(400).json({ message: "Something went wrong..!" });
-  // }
+  } catch (err) {
+    res.status(400).json({ message: "Something went wrong..!" });
+  }
 };
 
 // super admin Login / Sign in

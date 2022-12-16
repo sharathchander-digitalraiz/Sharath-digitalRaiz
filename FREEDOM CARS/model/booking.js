@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const booking = new mongoose.Schema({
   customerName: {
     type: String,

@@ -9,6 +9,7 @@ const carModelAppRoute = require("./car.routes");
 const notifyAppRoute = require("./notify.routes");
 const bookingAppRoute = require("./booking.routes");
 const favouritesAppRoute = require("./favourites.routes");
+const terms = require("./termsAndConditions")
 
 // defining routes
 appRoute.get("/", function (req, res) {
@@ -33,7 +34,8 @@ appRoute.use("/booking", bookingAppRoute);
 
 appRoute.use("/favourites", favouritesAppRoute);
 
-
+/****************** customer terms ****************/
+appRoute.use("/user", terms);
 
 // appRoute.use("/profile", verifyAdminToken, cors(), ProfileRoute);
 

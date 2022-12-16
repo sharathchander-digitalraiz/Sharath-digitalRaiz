@@ -87,16 +87,17 @@ exports.customerAppSignin = async function (req, res) {
         password: 1,
         appFcmToken: 1,
         isBlocked: 1,
+        status:1
       }
     );
     if (user) {
       // console.log(user)
       let passward = req.body.password;
       const pass = bcrypt.compareSync(passward, user.password);
-
+      
       console.log(pass);
       console.log(user);
-      if (pass && user.isBlocked == false) {
+      if (pass) {
         // generate JWT Token
         let token = jwt.sign(
           {
@@ -303,7 +304,8 @@ exports.withdrawalWalletAmount = async (req, res) => {
       { _id: req.userId },
       {
         wallet: req.body.wallet,
-      }
+      },
+      {new:true}
     );
     if (amount) {
       res
@@ -319,6 +321,302 @@ exports.withdrawalWalletAmount = async (req, res) => {
     res.status(400).json({ message: "Something went wrong..!" });
   }
 };
+
+const otpModel = require("../../model/otp");
+const nodemailer =require("nodemailer");
+//forgot password for customer api
+exports.generateOtp = function (req, res) {
+  // try {
+    customerModel.findOne({ email: req.body.email }).exec(function (err, user) {
+    if (user) {
+      let num = "1234567890";
+      let otp = "";
+      let oneTimePassword;
+      let senderEmail = req.body.email;
+      for (let i = 0; i < 6; i++) {
+        otp = otp + num[Math.floor(Math.random() * 10)];
+      }
+      oneTimePassword = otp;
+      const otpObj = new otpModel({
+        emailOtp: oneTimePassword,
+        emailId: senderEmail
+      });
+
+      otpObj.save(function (eror, data) {
+        if (eror) {
+          return res
+            .status(400)
+            .json({ message: "OTP could not be generated" });
+        }
+        if (data) {
+          // const transporter = nodemailer.createTransport({ // forgot password passed attempt for gmail
+          //   service: "gmail",
+          //   host: "smtp.gmail.com",
+          //   port: "587",
+          //   auth: {
+          //     user: "syed.umaismgm@gmail.com",
+          //     pass: "broakwltzgqydmdr"
+          //   },
+          //   secureConnection: "false",
+          //   tls: {
+          //     ciphers: "SSLv3",
+          //     rejectUnauthorized: false
+          //   }
+          // });
+
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+           // host: "mail.digitalraiz.co.in",
+            host: "smtp.gmail.com" ,
+            //port: "587",
+            port: 465,
+            secure: true,
+            requireTLS: true,
+            auth: {
+              user: "sharathchanderg3@gmail.com",
+             // user: "no-reply@digitalraiz.co.in",
+              pass: "drodhxsooferaydf",
+              //pass: "6RwZAp&0s"
+            },
+          //   secureConnection: "false",
+          //   tls: {
+          //     ciphers: "SSLv3",
+          //     rejectUnauthorized: false
+          //   }
+          });
+
+          console.log(senderEmail);
+          let mailOpetions = { 
+            from: "sharathchanderg3@gmail.com",
+            to: `${senderEmail}`,
+            subject: "Forgot password OTP",
+            html: `<p> The OTP for changing the password is\:
+            <strong style=" color : DarkBlue; font-size: 20px"> ${oneTimePassword} </strong> 
+            </p> <hr> <br/> <p> <i style="font-size: 15px"> The OTP is valid for 10 minutes! </i> </p> `
+          };
+
+          transporter.sendMail(mailOpetions, function (err, success) {
+            if (err) {
+              console.log(err);
+            }
+            if (success) {
+              console.log("Email sent successfully");
+            }
+          });
+          res
+            .status(200)
+            .json({ message: "OTP was sent successfully to the specified email." });
+        }
+      });
+    } else {
+      return res
+        .status(400)
+        .json({ message: "The user is not registered with this email." });
+    }
+  });
+  // } catch (err) {
+  //   res.status(400).json({ message: "Something went wrong..!" });
+  // }
+};
+
+// comapre OTP
+exports.compareOtp = function (req, res) {
+  try {
+    const otpResult = otpModel
+      .findOne({ emailOtp: req.body.emailOtp })
+      .exec(function (er, otp) {
+        if (otp) {
+          res.status(200).json({ message: "OTP was verified successfully." });
+        } else {
+          return res.status(400).json({ message: "Invalid OTP" });
+        }
+      });
+  } catch (err) {
+    res.status(400).json({ message: "Invalid OTP", Error: err });
+  }
+};
+
+// reset password
+exports.resetPassword = function (req, res) {
+  try {
+    const showEmail = otpModel
+      .findOne({ emailOtp: req.body.emailOtp }, { emailId: 1, emailOtp: 1 })
+      .exec(async function (er, otp) {
+        if (otp) {
+          const { newpassword, confirmpassword } = req.body;
+
+          if (newpassword == confirmpassword) {
+            let bcruptedPassword = bcrypt.hashSync(confirmpassword, 10);
+
+            const showUser = await customerModel.updateOne(
+              { email: otp.emailId },
+              {
+                $set: {
+                  password: bcruptedPassword
+                }
+              },
+              { new: true }
+            );
+
+            const transporter = nodemailer.createTransport({
+              service: "email",
+               host: "smtp.gmail.com" ,
+               port: 465,
+               auth: {
+                 user: "sharathchanderg3@gmail.com",
+                 pass: "drodhxsooferaydf",
+               },
+              // service: "email",
+              // host: "mail.digitalraiz.co.in",
+              // port: "587",
+              // auth: {
+              //   user: "no-reply@digitalraiz.co.in",
+              //   pass: "6RwZAp&0s"
+              // },
+              // secureConnection: "false",
+              // tls: {
+              //   ciphers: "SSLv3",
+              //   rejectUnauthorized: false
+              // }
+            });
+
+            // console.log(senderEmail);
+            let mailOpetions = {
+              from: "sharathchanderg3@gmail.com",
+              to: `${otp.emailId}`,
+              subject: "Reset password",
+              html: `<p>  <i style=style=" color : DarkBlue; "font-size: 15px"> You have successfully reset your password. </i> <br/> 
+              <br/> <br/> <strong style=" color : Black; font-size: 15px">
+              <p>Note: If this action has not been taken by you, then please contact Digital Raiz Creative Solutions, Hyderabad.  </p> </strong>`
+            };
+
+            transporter.sendMail(mailOpetions, function (err, success) {
+              if (err) {
+                console.log(err);
+              }
+              if (success) {
+                console.log("Email sent successfully");
+              }
+            });
+
+            res
+              .status(200)
+              .json({
+                message:
+                  "The email sent successfully. Please login with your new password."
+              });
+          }
+        } else {
+          return res.status(400).json({ message: "Invalid OTP" });
+        }
+      });
+  } catch (err) {
+    res.status(400).json({ message: "something went wrong!",error:err });
+  }
+};
+
+
+
+
+
+// const bcrypt = require("bcryptjs");
+// const nodemailer = require("nodemailer");
+// const randomstring = require("randomstring");
+// require("dotenv").config();
+// const User = require("../Models/user_auth")
+
+// //to encrypt the password
+// const securePassword = async (password) => {
+//   try {
+//     const hashPassword = await bcrypt.hashSync(password, 10);
+//     return hashPassword;
+//   } catch (error) {
+//     res.status(400).send(error.message);
+//   }
+// };
+
+// //set the path to sent email
+// const sentEmailToReset = async (name, email, token) => {
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       host: "smtp.gmail.com",
+//       port: 465,
+//       secure: true,
+//       requireTLS: true,
+//       //service:'gmail',
+//       auth: {
+//         user: 'sharathchanderg3@gmail.com',
+//         pass: 'drodhxsooferaydf',
+//       },
+//     });
+//     const mailOption = {
+//       from: process.env.SAN_EMAIL, 
+//       to: email,
+//       subject: "Reset Password",
+//       html: `<h1>Hello ${name}!!</h1>
+//             <p>Please copy the <a href="http://localhost:4000/api/reset_password?token=${token}">link</a> to reset your password</p>`,
+//     };
+//     transporter.sendMail(mailOption, function (err, info) {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log("mail has sent to your registered email ", info.response);
+//       }
+//     });
+//   } catch (err) {
+//     res.status(400).send({ success: false, message: err.message });
+//   }
+// };
+
+// //forgot passed to sent email
+// exports.forgotpasword = async (req, res) => {
+//   try {
+//     const email = req.body.email;
+//     const userData = await User.findOne({ email: email });
+//     if (userData) {
+//       const randomString = randomstring.generate();
+//       const data = await User.updateOne(
+//         { email: email },
+//         { $set: { token: randomString } }
+//       );
+//       //console.log(data)
+//       sentEmailToReset(data.name, userData.email, randomString);
+//       res
+//         .status(200)
+//         .send({
+//           success: true,
+//           meassage: "please check your email to reset your password",
+//         });
+//     }
+//   } catch (err) {
+//     res.status(400).send({ success: false, message: err.message });
+//   }
+// };
+
+// //rest password API
+// exports.resetPassword = async (req, res) => {
+//   try {
+//     const token = req.query.token;
+//     console.log(token)
+//     const tokenData = await User.findOne({ token: token });
+//    //console.log(tokenData)
+//     if (tokenData) {
+//       const password = req.body.password;
+//       const hashingPassword = await securePassword(password);
+//       const userData = await User.findByIdAndUpdate(
+//         { _id: tokenData._id },
+//         { $set: { password: hashingPassword },token:" " },
+//         { new: true }
+//       );
+//       console.log(userData)
+//       res.status(200).send({ success:true, message:"your password is rested successfully",data:userData})
+//     }
+//   } catch (err) {
+//     res.status(400).send({ success: false, message: err.message });
+//   }
+// };
+
+
 
 // // update verifcation details
 // exports.verifyCustomerDetails = async function (req, res) {
