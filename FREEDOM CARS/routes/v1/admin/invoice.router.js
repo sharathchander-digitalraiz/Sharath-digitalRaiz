@@ -1,26 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+
 const invoice = require('../../../controller/admin/invoice.controller');
 
-// var indexRouter = require(''); 
-
-// view engine setup
-router.set('views', path.join(__dirname, 'views'));
-router.set('view engine', 'hbs');
-
-router.use(logger('dev'));
-router.use(express.json());
-router.use(express.urlencoded({ extended: false }));
-router.use(cookieParser());
-router.use(express.static(path.join(__dirname, 'public')));
 
 // router.use('/', indexRouter); 
-router.get('/', invoice.print); 
+router.get('/:id', invoice.invoicePdf); 
 
 // catch 404 and forward to error handler
 router.use(function(req, res, next) {

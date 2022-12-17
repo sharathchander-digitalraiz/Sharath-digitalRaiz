@@ -2,24 +2,26 @@ const fs = require("fs");
 const readFile = require("util").promisify(fs.readFile);
 const hbs = require("hbs");
 const pdf = require("html-pdf");
-const { writeFile } = require("fs");
+//const { writeFile } = require("fs");
 const Bookings = require("../../model/booking");
+const generator = require("generate-serial-number");
 
 exports.invoicePdf = async (req, res) => {
-  const booking = await Bookings.findOne({customerId:req.param.customerId});
-exports.print = async (req, res) => {
+  const booking = await Bookings.findOne({ customerId: req.params.id });
+  // exports.print = async (req, res) => {
   const invoiceItems = [
-    { item: "Price", amount: booking.price  },
+    { item: "Price", amount: booking.price },
     { item: "GST", amount: booking.gst },
-    { item: "Transaction Charges", amount: booking.transactionCharges},
-    { item: "Discount", amount: booking.discountPrice },
+    { item: "Transaction Charges", amount: booking.transactionCharges },
+    { item: "Coupon", amount: booking.couponCode },
+   // { item: "Total", amount: booking.totalprice },
   ];
   const invoiceData = {
-    invoice_id: 123,
-    transaction_id: 1234567,
-    customer_name: "Ram",
+    invoice_id: `#FC${generator.generate(8)}`,
+    transaction_id: booking.booking_id,
+    customer_name: booking.customerName,
     creation_date: new Date().toISOString().slice(0, 10),
-    total_amount: 141.5,
+    total_amount: booking.totalprice,
   };
 
   const content = await readFile("views/invoice.hbs", "utf8");
@@ -30,18 +32,18 @@ exports.print = async (req, res) => {
     base: `${req.protocol}://${req.get("host")}`, // http://localhost:3000
     format: "A4",
   };
-  writeFile("./report.pdf", pdf, {}, (err) => {
-    if (err) {
-      return console.error("error");
-    }
-    console.log("success!");
-  });
+  // writeFile("./report.pdf", pdf, {}, (err) => {
+  //   if (err) {
+  //     return console.error("error");
+  //   }
+  //   console.log("success!");
+  // });
   pdf.create(html, options).toBuffer((err, buffer) => {
     if (err) return console.log(err);
     res.attachment("invoice.pdf");
     res.end(buffer);
   });
-}};
+};
 
 // // const fs  = require("fs");
 // // const pdf = require("pdf-creator-node");

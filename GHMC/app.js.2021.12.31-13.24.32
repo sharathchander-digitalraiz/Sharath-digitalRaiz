@@ -1,0 +1,111 @@
+var createError = require('http-errors');
+const env = require("dotenv");
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var mongoose = require('mongoose');
+var  bodyParser = require('body-parser');
+require('dotenv').config({path:__dirname+'.env'})
+process.env["NODE_CONFIG_DIR"] = __dirname + "/config/";
+const  config = require('config');
+var indexRouter = require('./routes/index');
+var landmarksRouter = require('./routes/landmarks');
+var setupRouter = require('./routes/setup');
+var usersRouter = require('./routes/users');
+const authRouters = require('./routes/auth'); 
+var cors = require('cors');
+const cron = require('node-cron');
+var request = require('request');
+const appauthRouters = require('./routes/app/auth');
+const admindashboardRoutes = require('./routes/admin/dashboard_routes'); 
+const complaint = require('./routes/app/complaint');
+const gvpbep = require('./routes/app/gvpbvp');
+const culvert =require('./routes/app/culvert');
+const vehicles =require('./routes/app/vehicles');
+const complex_building =require('./routes/app/complex_building');
+// ADMIN ROUTES
+const adminsetupRoutes = require('./routes/admin/setupadmin'); 
+var app = express(); 
+var multer = require('multer');  
+var upload = multer();  
+const router = express.Router();
+app.use('/api', router);
+//mongoose.connect('mongodb+srv://ghmc_user:azH6UhIrYVBE12Qm@ghmc.lzc2g.mongodb.net/GEO_GHMC?retryWrites=true&w=majority',
+//mongoose.connect('mongodb://127.0.0.1:27017/GHMC_SANITATION',
+mongoose.connect('mongodb://iotroncs_user:GUCHwDu1v@103.171.181.73:27017/iotroncs_ghmcsanatition?retryWrites=true&w=majority',
+{
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+} 
+).then(() =>
+   {
+    console.log("Database connected");
+  });
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');  
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+//app.use(upload.array()); 
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+landmarksRouter.routes(app);
+setupRouter.routes(app); 
+
+app.use(cors());
+
+appauthRouters.routes(app);
+complaint.routes(app);
+complex_building.routes(app);
+culvert.routes(app);
+gvpbep.routes(app);
+vehicles.routes(app);
+// ADMIN ROUTES
+adminsetupRoutes.routes(app); 
+admindashboardRoutes.routes(app); 
+authRouters.routes(app); 
+// catch 404 and forward to error handler
+app.use(function(req, res, next)
+{
+  next(createError(404));
+});
+
+
+
+// error handler
+app.use(function(err, req, res, next)  
+{
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+// Backup a run  at 11:59 PM every day.
+cron.schedule('0 0 * * *', function()
+{
+    console.log('running a task every minute');
+var options = {
+  'method': 'POST',
+  'url': 'http://13.233.105.84:2000/scan_cronjob'
+};
+request(options, function (error, response) 
+{
+  //console.log(response.body);
+});
+});
+
+app.listen(2000, () => {
+  console.log('Server is running on port 2000');
+});
+module.exports = app;

@@ -5,14 +5,26 @@ var path = require("path");
 var multer = require("multer");
 var upload = multer();
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const ejs = require("ejs");
 require("dotenv").config();
 
-// set template engine
-app.set("view engine", "ejs");
+// set template engine 
+//app.set("view engine", "ejs");
 // app.use(express.static(path.join(__dirname,'public')))
 //app.use(expressLayout);
 app.use('/docs', express.static(path.join(__dirname, 'docs')));
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('views')); 
 
 // combining and importing all the routes
 const v1Route = require("./routes/v1");

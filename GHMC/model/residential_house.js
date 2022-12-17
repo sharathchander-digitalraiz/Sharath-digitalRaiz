@@ -1,0 +1,190 @@
+const mongoose = require("mongoose");
+
+const residential_Schema = new mongoose.Schema({
+  uuid: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  date: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  zone: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  circle: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  ward_name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  area: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  landmark: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  type: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  house_address: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  owner_name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  owner_mobile: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  owner_aadhar: {
+    type: String,
+    required: false,
+    trim: false
+  },
+  existing_disposal: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  quality_waste: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  wastage_quantity: {
+    type: Number,
+    required: true,
+    trim: true
+  },
+  propertyno: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  eighteenabove: {
+    type: Number,
+    required: false,
+    trim: true
+  },
+  eighteenbelow: {
+    type: Number,
+    required: false,
+    trim: true
+  },
+  tenent_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "tenent",
+    required: true
+  },
+  zones_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "zones",
+    required: true
+  },
+  circles_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "circles",
+    required: true
+  },
+  ward_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "wards",
+    required: true
+  },
+  landmark_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "landamrks",
+    required: true
+  },
+  area_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "area",
+    required: true
+  },
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Users",
+    required: true
+  },
+  status: {
+    type: String,
+    default: "Active"
+  },
+  created_by: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Users",
+    required: false
+  },
+  log_date_created: {
+    type: Date,
+    default: new Date()
+  },
+  log_date_modified: {
+    type: Date,
+    default: new Date()
+  },
+  modified_by: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Users",
+    required: false
+  },
+  place: { type: { type: String }, coordinates: [Number] },
+  image: [{ img: { type: String } }],
+  unique_no: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  qr_code_view: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  qr_image: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  family: {
+    type: Array
+  }
+});
+residential_Schema.index({ place: "2dsphere" });
+residential_Schema.index({ owner_mobile: "text", house_address: "text" });
+module.exports = mongoose.model("residential_house", residential_Schema);
+
+// {
+//   name: String,
+//   age: Number,
+//   gender: String,
+//   mobile: Number,
+//   aadhar: Number,
+//   eighteen_plus: Number,
+//   property_no: String,
+//   vaccine_type: String,
+//   vaccine_yes_no: String,
+//   first_dose_yes_no: String,
+//   first_dost_date: String,
+//   second_dose_yes_no: String,
+//   second_dose_date: String
+// }

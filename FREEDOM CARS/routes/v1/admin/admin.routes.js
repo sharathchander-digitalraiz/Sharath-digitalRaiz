@@ -132,6 +132,6 @@ adminRoute.use("/carbooking", bookingRoute);
 adminRoute.use("/security", securityDeposit);
 
 /*********invoice repoprt*******/
-adminRoute.use("invoice",invoice);
+adminRoute.use("/invoice",invoice);
 
 module.exports = adminRoute;

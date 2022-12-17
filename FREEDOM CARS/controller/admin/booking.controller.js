@@ -74,7 +74,7 @@ exports.addBooking = async function (req, res) {
   //var gst=((carPrice.price*datesCOunt)*1)/100;
   const bookingObj = new BookingModel({
     //carId: req.body.carId,
-    //customerName: custUser ? custUser.customerName : "",
+    customerName: req.body.customerName,
     phone: req.body.phone,
     email: req.body.email,
     // carType: req.body.carType,
@@ -87,11 +87,11 @@ exports.addBooking = async function (req, res) {
     // toDate: req.body.toDate,
     // carPriceId: req.body.carPriceId,
     // timeSlot: req.body.timeSlot,
-    // price: req.body.price,
-    // gst: req.body.gst,
-    // transactionCharges: req.body.transactionCharges,
-    // totalprice: req.body.totalprice,
-    // couponCode: req.body.couponCode,
+    price: req.body.price,
+    gst: req.body.gst,
+    transactionCharges: req.body.transactionCharges,
+    totalprice: req.body.totalprice,
+    couponCode: req.body.couponCode,
     // couponId: null,
     // paymentStatus: req.body.paymentStatus,
     // securityDepositStatus: req.body.securityDepositStatus
