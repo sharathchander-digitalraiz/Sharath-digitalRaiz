@@ -89,3 +89,6 @@
 .invoice-box.rtl table tr td:nth-child(2) {
     text-align: left;
 }
+.borderst{
+    border: 3px solid black;
+}

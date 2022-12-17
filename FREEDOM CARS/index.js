@@ -16,60 +16,6 @@ const object = {
 };
 reportGenerate(object);
 
-// async function reportGenerate(object) {
-//   const template_image_path = "views";
-//   const width = 1654;
-//   const height = 2339;
-//   //   loadImage("./freedomcars.png").then((image) => {
-//   //     context.drawImage(image, 0, 0, 1654, 2339);
-//   //     const buffer = canvas.toBuffer("image/png");
-//   //     fs.writeFileSync(template_image_path + "/" + srl + ".png", buffer);
-//   //     context.drawImage(image, 0, 0);
-//   //   });
-
-//   //   registerFont("./fonts/Lato-Black.ttf", { family: "Lato-Black" });
-//   //   registerFont("./fonts/Lato-Light.ttf", { family: "Lato-Regular" });
-//   //   const canvas = createCanvas(width, height);
-//   //   const context = canvas.getContext("2d");
-//   //   context.fillStyle = "#fff";
-//   //   context.fillRect(0, 0, width, height);
-
-//   const buffer = canvas.toBuffer("image/png");
-//   fs.writeFileSync(template_image_path + srl + ".png", buffer);
-//   // const images = object.image;
-//   loadImage("./freedomcars.png").then((image) => {
-//     context.fillStyle = "#000";
-//     context.font = "38px Lato-Black";
-//     context.textAlign = "left";
-//     context.fillText(object.summaryNumber, 448, 405);
-//     console.log(image);
-//     context.fillStyle = "#000";
-//     context.font = "38px Lato-Regular";
-//     context.textAlign = "left";
-
-//     registerFont("./fonts/Lato-Black.ttf", { family: "Lato-Black" });
-//     registerFont("./fonts/Lato-Light.ttf", { family: "Lato-Regular" });
-//     const canvas = createCanvas(width, height);
-//     const context = canvas.getContext("2d");
-//     context.fillStyle = "#fff";
-//     context.fillRect(0, 0, width, height);
-
-//     // var desline1 = object.description.substring(0, 67);
-//     // var desline2 = object.description.substring(68, 137);
-//     // context.fillText(desline1 + "\n" + desline2, 448, 458);
-
-//     // var comment1 = object.comment.substring(0, 37);
-//     // var comment2 = object.comment.substring(38, 76);
-//     // var comment3 = object.comment.substring(77, 100);
-//     // context.fillText(comment1 + "\n" + comment2 + "\n" + comment3, 448, 775);
-
-//     context.drawImage(image, 1365, 605, 242, 242);
-//     const buffer = canvas.toBuffer("image/png");
-//     fs.writeFileSync(template_image_path + "/" + srl + ".png", buffer);
-//     context.drawImage(image, 0, 0);
-//   });
-//   //return template_image_path + "/" + srl + ".png";
-// }
 
 async function reportGenerate(err) {
   const template_image_path = "views";
@@ -79,7 +25,7 @@ async function reportGenerate(err) {
     context.drawImage(image, 0, 0, width, height);
     const buffer = canvas.toBuffer("image/png");
     fs.writeFileSync(
-      template_image_path + circles + "/" + srl + ".png",
+      template_image_path +  + "/" + srl + ".png",
       buffer
     );
     context.drawImage(image, 0, 0);
@@ -93,19 +39,19 @@ async function reportGenerate(err) {
   context.fillRect(0, 0, width, height);
 
   const buffer = canvas.toBuffer("image/png");
-  fs.writeFileSync(template_image_path + circles + "/" + srl + ".png", buffer);
-  const qr_codes = qr_code_image_path + circles + "/" + srl + ".png";
+  fs.writeFileSync(template_image_path +  + "/" + srl + ".png", buffer);
+  const qr_codes = template_image_path +  + "/" + srl + ".png";
   loadImage(qr_codes).then((image) => {
-    context.fillStyle = "#000";
-    context.font = "28px cambria";
-    context.textAlign = "left";
-    context.fillText(object.summaryNumber, 435, 807);
     console.log(object.summaryNumber);
+    context.textAlign = "left";
+    context.fillStyle = "#fff";
+    context.fillText(object.summaryNumber, 435, 807);
+    context.font = "38px Lato-Regular";
 
     context.drawImage(image, 155, 330, 380, 380);
     const buffer = canvas.toBuffer("image/png");
     fs.writeFileSync(
-      template_image_path + circles + "/" + srl + ".png",
+      template_image_path +  + "/" + srl + ".png",
       buffer
     );
     context.drawImage(image, 0, 0);
