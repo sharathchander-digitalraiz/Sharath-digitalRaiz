@@ -20,6 +20,10 @@ exports.invoicePdf = async (req, res) => {
     invoice_id: `#FC${generator.generate(8)}`,
     transaction_id: booking.booking_id,
     customer_name: booking.customerName,
+    customer_phone: booking.phone,
+    customer_email: booking.email,
+    from:booking.fromDate,
+    to:booking.toDate,
     creation_date: new Date().toISOString().slice(0, 10),
     total_amount: booking.totalprice,
   };

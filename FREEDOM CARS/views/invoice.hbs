@@ -18,7 +18,11 @@
                                 Invoice:
                                 {{invoiceData.invoice_id}}<br />
                                 Date:
+                                {{invoiceData.creation_date}} 
+                                {{!-- Car Pickup Date & Time:
                                 {{invoiceData.creation_date}}
+                                Car Pickup Date & Time:
+                                {{invoiceData.creation_date}} --}}
                             </td>
                         </tr>
                     </table>
@@ -33,17 +37,27 @@
                                 KPHB,Hyderabad<br />
                                 India,500068.
                             </td>
-                            {{!-- <td>
-                                Godaddy LLC.<br />
+                            <td>
+                                Name: 
+                                <td>{{invoiceData.customer_name}}</td><br>
+                                Email: 
+                                <td>{{invoiceData.customer_email}}</td> <br>
+                                Phone: 
+                                <td>{{invoiceData.customer_phone}}</td><br>
+                                Pickup: 
+                                {{invoiceData.from}} <br>
+                                Return: 
+                                {{invoiceData.to}} <br>
+                                {{!-- Godaddy LLC.<br />
                                 John Wick<br />
-                                john@example.com
-                            </td> --}}
+                                john@example.com --}}
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr class="heading">
-                <td>Customer Name</td>
+                <td>Payment Mode</td>
                 <td>Booking Id</td>
             </tr>
             <tr class="details">
