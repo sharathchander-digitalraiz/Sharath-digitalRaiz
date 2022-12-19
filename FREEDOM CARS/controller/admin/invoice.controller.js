@@ -29,7 +29,7 @@ exports.invoicePdf = async (req, res) => {
   const html = template({ invoiceItems, invoiceData });
 
   const options = {
-    base: `${req.protocol}://${req.get("host")}`, // http://localhost:3000
+    base: `${req.protocol}://${req.get("host")}`, // http://localhost:5050
     format: "A4",
   };
   // writeFile("./report.pdf", pdf, {}, (err) => {
