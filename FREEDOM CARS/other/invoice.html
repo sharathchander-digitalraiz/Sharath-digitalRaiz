@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Freedom Cars</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            text-align: center;
+            color: #777;
+        }
+
+        body h1 {
+            font-weight: 300;
+            margin-bottom: 0px;
+            padding-bottom: 0px;
+            color: #000;
+        }
+
+        body h3 {
+            font-weight: 300;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #555;
+        }
+
+        body a {
+            color: #06f;
+        }
+
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: #555;
+        }
+
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+            border-collapse: collapse;
+        }
+
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+
+        .invoice-box table tr td:nth-child(2) {
+            text-align: right;
+        }
+
+        .invoice-box table tr.top table td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.top table td.title {
+            font-size: 45px;
+            line-height: 45px;
+            color: #333;
+        }
+
+        .invoice-box table tr.information table td {
+            padding-bottom: 40px;
+        }
+
+        .invoice-box table tr.heading td {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+
+        .invoice-box table tr.details td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-box table tr.item.last td {
+            border-bottom: none;
+        }
+
+        .invoice-box table tr.total td:nth-child(2) {
+            border-top: 2px solid #eee;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .borderst {
+                border: 3px solid black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class=" invoice-box borderst">
+        <tr class="top">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td class="title">
+                            <img src="freedomlogo.png" alt="Company logo" width="150"/>
+                        </td>
+                        <td>
+                            <td>
+                                <h2>INVOICE</h2>
+                                <h6>#FC12345679890</h6> 
+                                <h6>Date: 19-12-2022</h6> 
+                            </td>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- <tr>
+            <td colspan="2"><img src="logo.png" width="150" /></td>
+            <td>
+                <h2>INVOICE</h2>
+                <h6>#FC12345679890</h6>
+                <h6>Date: 19-12-2022</h6>
+            </td>
+        </tr> -->
+
+        <body>
+            <center><b>
+                    <h3>Customer Info</h3>
+                </b></center>
+            <div>
+                <tr class="information">
+					<td colspan="2">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Pickup</th>
+                        <th>Return</th>
+                    </tr>
+                    <tr>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Alfreds@gmail.com</td>
+                        <td>9632587416</td>
+                        <td>22-12-2022 06:00 AM</td>
+                        <td>25-12-2022 12:00 PM</td>
+                    </tr>
+                </table>
+            </div>
+            <center><b>
+                    <h3>Payment Details</h3>
+                </b></center>
+            <div>
+                <table>
+                    <tr>
+                        <th>Payment mode</th>
+                        <th>Booking Id</th>
+                    </tr>
+                    <tr>
+                        <td>Cash</td>
+                        <td>FC225220</td>
+                    </tr>
+                </table>
+            </div> <br> <br>
+            <div>
+                <table>
+                    <tr>
+                        <th>Description</th>
+                        <th>Price/Details</th>
+                    </tr>
+                    <tr>
+                        <td><b>No. of Days</b></td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td><b>Price Per Day</b></td>
+                        <td>4000</td>
+                    </tr>
+                    <tr>
+                        <td><b>GST</b></td>
+                        <td>500.36</td>
+                    </tr>
+                    <tr>
+                        <td><b>Transaction Charges</b></td>
+                        <td>600</td>
+                    </tr>
+                    <tr>
+                        <td><b>Dicount</b></td>
+                        <td>500</td>
+                    </tr>
+                    <tr>
+                        <td><b>Total</b></td>
+                        <td>12,600.36</td>
+                    </tr>
+                </table>
+                <br> <br><br><br>
+                <center>
+                    <p><i>This is a computer-generated invoice and does not require a signature and stamp.</i></p>
+                </center>
+            </div>
+        </body>
+    </div>
+</body>
+
+</html>

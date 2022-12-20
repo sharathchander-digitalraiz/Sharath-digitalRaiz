@@ -1,4 +1,38 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <titl></titl>{{tittle}}</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body> 
+    <center><h1>Employees Details</h1></center>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email-id</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+            {{#each invoiceData as | invoice |}}
+            <tr>
+                <td>{{invoice.customer_name}}</td>
+                <td>{{invoice.customer_phone}}</td>
+                <td>{{invoice.customer_email}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div> 
+</body>
+</html>
+ 
+
+{{!-- <html>
+    {{!-- http://127.0.0.1:5017/v1/admin/invoice/6399a1521d6855d5fcc72b96 --}}
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -19,10 +53,10 @@
                                 {{invoiceData.invoice_id}}<br />
                                 Date:
                                 {{invoiceData.creation_date}} 
-                                {{!-- Car Pickup Date & Time:
+                                {{Car Pickup Date & Time:
                                 {{invoiceData.creation_date}}
                                 Car Pickup Date & Time:
-                                {{invoiceData.creation_date}} --}}
+                                {{invoiceData.creation_date}} 
                             </td>
                         </tr>
                     </table>
@@ -33,20 +67,17 @@
                     <table>
                         <tr>
                             <td>
-                                Freedom Cars<br />
-                                KPHB,Hyderabad<br />
-                                India,500068.
+                               <b>FREEDOM CARS</b> <br />
+                                KPHB, Hyderabad<br />
+                                India, 500 085.
                             </td>
                             <td>
-                                Name: 
-                                <td>{{invoiceData.customer_name}}</td><br>
-                                Email: 
-                                <td>{{invoiceData.customer_email}}</td> <br>
-                                Phone: 
-                                <td>{{invoiceData.customer_phone}}</td><br>
-                                Pickup: 
-                                {{invoiceData.from}} <br>
-                                Return: 
+                                 <b>Name</b>: {{invoiceData.customer_name}}<br />
+                                 <b>Email</b>: {{invoiceData.customer_email}} <br />
+                                 <b>Phone</b>: {{invoiceData.customer_phone}}<br />
+                                 <b>Pickup</b>: 
+                                 {{invoiceData.from}} <br>
+                                <b>Return</b>: 
                                 {{invoiceData.to}} <br>
                                 {{!-- Godaddy LLC.<br />
                                 John Wick<br />
@@ -61,8 +92,8 @@
                 <td>Booking Id</td>
             </tr>
             <tr class="details">
-                <td>{{invoiceData.customer_name}}</td>
-                <td>{{invoiceData.transaction_id}}</td>
+                <td>{{invoiceData.payment_mode}}</td>
+                <td>{{invoiceData.booking_id}}</td>
             </tr>
             <tr class="heading">
                 <td>Description</td>
@@ -82,4 +113,4 @@
     </div>
 </body>
 
-</html>
+</html> --}}

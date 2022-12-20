@@ -1,0 +1,21 @@
+{
+    "tittle":"employees1 details",
+    "users":
+    [
+    {
+        "name":"John",
+        "email":"john@example.com",
+        "phone":"6332254541"
+    },
+    {
+        "name":"sam",
+        "email":"sam@example.com",
+        "phone":"448451"
+    },
+    {
+        "name":"neha",
+        "email":"neha@example.com",
+        "phone":"5269"
+    }
+    ]
+}

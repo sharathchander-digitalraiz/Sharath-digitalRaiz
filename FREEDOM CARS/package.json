@@ -24,6 +24,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-validator": "^6.14.2",
     "form-data": "^4.0.0",
+    "fs-extra": "^11.1.0",
     "generate-serial-number": "0.0.3",
     "hbs": "^4.2.0",
     "jimp": "^0.16.2",
