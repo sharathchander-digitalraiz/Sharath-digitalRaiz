@@ -8,7 +8,7 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body> 
-    <center><h1>Employees Details</h1></center>
+    <center><h1>Customer info</h1></center>
     <table class="table">
         <thead>
             <tr>
@@ -17,13 +17,13 @@
                 <th>Phone</th>
             </tr>
         </thead>
-            {{#each invoiceData as | invoice |}}
+            {{!-- {{#each invoiceData as | invoice |}} --}}
             <tr>
                 <td>{{invoice.customer_name}}</td>
                 <td>{{invoice.customer_phone}}</td>
                 <td>{{invoice.customer_email}}</td>
             </tr>
-            {{/each}}
+            {{!-- {{/each}} --}}
         </tbody>
     </table>
 </div> 
@@ -31,86 +31,3 @@
 </html>
  
 
-{{!-- <html>
-    {{!-- http://127.0.0.1:5017/v1/admin/invoice/6399a1521d6855d5fcc72b96 --}}
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Invoice</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-</head>
-
-<body>
-    <div class="invoice-box borderst">
-        <table cellpadding="0" cellspacing="0">
-            <tr class="top">
-                <td colspan="2">
-                    <table>
-                        <tr>
-                            <td colspan="2"><img src="logo.png" width="150" /></td>
-                            <td>
-                                Invoice:
-                                {{invoiceData.invoice_id}}<br />
-                                Date:
-                                {{invoiceData.creation_date}} 
-                                {{Car Pickup Date & Time:
-                                {{invoiceData.creation_date}}
-                                Car Pickup Date & Time:
-                                {{invoiceData.creation_date}} 
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr class="information">
-                <td colspan="2">
-                    <table>
-                        <tr>
-                            <td>
-                               <b>FREEDOM CARS</b> <br />
-                                KPHB, Hyderabad<br />
-                                India, 500 085.
-                            </td>
-                            <td>
-                                 <b>Name</b>: {{invoiceData.customer_name}}<br />
-                                 <b>Email</b>: {{invoiceData.customer_email}} <br />
-                                 <b>Phone</b>: {{invoiceData.customer_phone}}<br />
-                                 <b>Pickup</b>: 
-                                 {{invoiceData.from}} <br>
-                                <b>Return</b>: 
-                                {{invoiceData.to}} <br>
-                                {{!-- Godaddy LLC.<br />
-                                John Wick<br />
-                                john@example.com --}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr class="heading">
-                <td>Payment Mode</td>
-                <td>Booking Id</td>
-            </tr>
-            <tr class="details">
-                <td>{{invoiceData.payment_mode}}</td>
-                <td>{{invoiceData.booking_id}}</td>
-            </tr>
-            <tr class="heading">
-                <td>Description</td>
-                <td>Amount</td>
-            </tr>
-            {{#each invoiceItems}}
-            <tr class="item {{#if @last}} last {{/if}}">
-                <td>{{this.item}}</td>
-                <td>{{this.amount}}</td>
-            </tr>
-            {{/each}}
-            <tr class="total">
-                <td></td>
-                <td>Total: {{invoiceData.total_amount}}</td>
-            </tr>
-        </table>
-    </div>
-</body>
-
-</html> --}}

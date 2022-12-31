@@ -60,6 +60,14 @@ custAppRoute.put(
   customrapp.editCustomerDetails
 );
 
+/*************** update customer info Exist App side ************/
+custAppRoute.post(
+  "/existcustomerInfo",
+  verifyAdminToken,
+  upload_userImages.single('avatar'),
+  customrapp.customerExistStatus
+);
+
 /***************customer withdrawal request App side************/
 custAppRoute.put(
   "/withdrawal-wallet",

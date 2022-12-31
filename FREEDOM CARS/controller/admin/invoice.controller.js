@@ -18,14 +18,14 @@ exports.invoicePdf = async (req, res) => {
     );
     const payment = await Payment.findOne({ bookingId: Booking_id });
     // exports.print = async (req, res) => {
-    const invoiceItems = [
-      { item: "Price", amount:  45000 },
-      { item: "GST", amount:  0 },
-      { item: "Transaction Charges", amount: 0 },
-      { item: "Discount", amount:  0 },
-      //{ item: "Total", amount: payment.totalprice },
-    ];
-    const invoiceData = {
+    // const invoiceItems = [
+//       { item: "Price", amount:  45000 },
+//       { it      { item: "GST", amount:  0 },
+// em: "Transaction Charges", amount: 0 },
+//       { item: "Discount", amount:  0 },
+//       //{ item: "Total", amount: payment.totalprice },
+//     ];
+    const invoiceData = { 
       invoice_id: `#FC${generator.generate(8)}`,
       booking_id: 21212, //booking.booking_id,
       payment_mode: "cash", //payment.paymethod,
@@ -55,11 +55,11 @@ exports.invoicePdf = async (req, res) => {
       try{
           const browser = await puppeteer.launch();
           const page = await browser.newPage();
-          const content = await compile('invoice',{invoiceData,invoiceItems}); //await page.setContent('<h1>hello you are seeing created pdf</h1>')
+          const content = await compile('invoice',{invoiceData}); //await page.setContent('<h1>hello you are seeing created pdf</h1>')
           await page.setContent(content);
           //create a pdf page
           await page.pdf({
-              path: `invoice58.pdf`,
+              path: `invoice${generator.generate(8)}.pdf`,
               format: 'A4',
               printBackground: true
           })

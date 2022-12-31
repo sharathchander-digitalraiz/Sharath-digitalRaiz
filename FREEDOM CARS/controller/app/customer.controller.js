@@ -87,14 +87,14 @@ exports.customerAppSignin = async function (req, res) {
         password: 1,
         appFcmToken: 1,
         isBlocked: 1,
-        status:1
+        status: 1,
       }
     );
     if (user) {
       // console.log(user)
       let passward = req.body.password;
       const pass = bcrypt.compareSync(passward, user.password);
-      
+
       console.log(pass);
       console.log(user);
       if (pass) {
@@ -284,16 +284,14 @@ exports.editCustomerDetails = async function (req, res) {
       { new: true }
     );
     if (changeCust) {
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Customer details updated successfully",
-        });
+      res.status(200).json({
+        success: true,
+        message: "Customer details updated successfully",
+      });
     }
     res.status(400).json({ success: false, message: "Bad request" });
   } catch (err) {
-    res.status(400).json({ message: "Something went wrong..!" });
+    res.status(400).json({ success: false, message: "Something went wrong!" });
   }
 };
 
@@ -305,29 +303,27 @@ exports.withdrawalWalletAmount = async (req, res) => {
       {
         wallet: req.body.wallet,
       },
-      {new:true}
+      { new: true }
     );
     if (amount) {
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Customer details updated successfully",
-        });
+      res.status(200).json({
+        success: true,
+        message: "Customer details updated successfully",
+      });
     } else {
-      res.status(400).json({ message: "Bad request" });
+      res.status(400).json({ success: false, message: "Bad request" });
     }
   } catch (err) {
-    res.status(400).json({ message: "Something went wrong..!" });
+    res.status(400).json({ success: false, message: "Something went wrong!" });
   }
 };
 
 const otpModel = require("../../model/otp");
-const nodemailer =require("nodemailer");
+const nodemailer = require("nodemailer");
 //forgot password for customer api
 exports.generateOtp = function (req, res) {
   // try {
-    customerModel.findOne({ email: req.body.email }).exec(function (err, user) {
+  customerModel.findOne({ email: req.body.email }).exec(function (err, user) {
     if (user) {
       let num = "1234567890";
       let otp = "";
@@ -339,7 +335,7 @@ exports.generateOtp = function (req, res) {
       oneTimePassword = otp;
       const otpObj = new otpModel({
         emailOtp: oneTimePassword,
-        emailId: senderEmail
+        emailId: senderEmail,
       });
 
       otpObj.save(function (eror, data) {
@@ -366,33 +362,33 @@ exports.generateOtp = function (req, res) {
 
           const transporter = nodemailer.createTransport({
             service: "gmail",
-           // host: "mail.digitalraiz.co.in",
-            host: "smtp.gmail.com" ,
+            // host: "mail.digitalraiz.co.in",
+            host: "smtp.gmail.com",
             //port: "587",
             port: 465,
             secure: true,
             requireTLS: true,
             auth: {
               user: "sharathchanderg3@gmail.com",
-             // user: "no-reply@digitalraiz.co.in",
+              // user: "no-reply@digitalraiz.co.in",
               pass: "drodhxsooferaydf",
               //pass: "6RwZAp&0s"
             },
-          //   secureConnection: "false",
-          //   tls: {
-          //     ciphers: "SSLv3",
-          //     rejectUnauthorized: false
-          //   }
+            //   secureConnection: "false",
+            //   tls: {
+            //     ciphers: "SSLv3",
+            //     rejectUnauthorized: false
+            //   }
           });
 
           console.log(senderEmail);
-          let mailOpetions = { 
+          let mailOpetions = {
             from: "sharathchanderg3@gmail.com",
             to: `${senderEmail}`,
             subject: "Forgot password OTP",
             html: `<p> The OTP for changing the password is\:
             <strong style=" color : DarkBlue; font-size: 20px"> ${oneTimePassword} </strong> 
-            </p> <hr> <br/> <p> <i style="font-size: 15px"> The OTP is valid for 10 minutes! </i> </p> `
+            </p> <hr> <br/> <p> <i style="font-size: 15px"> The OTP is valid for 10 minutes! </i> </p> `,
           };
 
           transporter.sendMail(mailOpetions, function (err, success) {
@@ -405,7 +401,9 @@ exports.generateOtp = function (req, res) {
           });
           res
             .status(200)
-            .json({ message: "OTP was sent successfully to the specified email." });
+            .json({
+              message: "OTP was sent successfully to the specified email.",
+            });
         }
       });
     } else {
@@ -452,20 +450,20 @@ exports.resetPassword = function (req, res) {
               { email: otp.emailId },
               {
                 $set: {
-                  password: bcruptedPassword
-                }
+                  password: bcruptedPassword,
+                },
               },
               { new: true }
             );
 
             const transporter = nodemailer.createTransport({
               service: "email",
-               host: "smtp.gmail.com" ,
-               port: 465,
-               auth: {
-                 user: "sharathchanderg3@gmail.com",
-                 pass: "drodhxsooferaydf",
-               },
+              host: "smtp.gmail.com",
+              port: 465,
+              auth: {
+                user: "sharathchanderg3@gmail.com",
+                pass: "drodhxsooferaydf",
+              },
               // service: "email",
               // host: "mail.digitalraiz.co.in",
               // port: "587",
@@ -487,7 +485,7 @@ exports.resetPassword = function (req, res) {
               subject: "Reset password",
               html: `<p>  <i style=style=" color : DarkBlue; "font-size: 15px"> You have successfully reset your password. </i> <br/> 
               <br/> <br/> <strong style=" color : Black; font-size: 15px">
-              <p>Note: If this action has not been taken by you, then please contact Digital Raiz Creative Solutions, Hyderabad.  </p> </strong>`
+              <p>Note: If this action has not been taken by you, then please contact Digital Raiz Creative Solutions, Hyderabad.  </p> </strong>`,
             };
 
             transporter.sendMail(mailOpetions, function (err, success) {
@@ -499,25 +497,38 @@ exports.resetPassword = function (req, res) {
               }
             });
 
-            res
-              .status(200)
-              .json({
-                message:
-                  "The email sent successfully. Please login with your new password."
-              });
+            res.status(200).json({
+              message:
+                "The email sent successfully. Please login with your new password.",
+            });
           }
         } else {
           return res.status(400).json({ message: "Invalid OTP" });
         }
       });
   } catch (err) {
-    res.status(400).json({ message: "something went wrong!",error:err });
+    res.status(400).json({ message: "something went wrong!", error: err });
   }
 };
 
-
-
-
+//customer exist status
+exports.customerExistStatus = async function (req, res) {
+  try {
+    const customerExist = await customerModel.findOne(
+      { _id: req.userId },
+      {_id:1, customerName: 1, email: 1, phone: 1, alternate_phone: 1, status: 1 }
+    );
+    if (customerExist) {
+      res
+        .status(200)
+        .json({ status: true, message: "Successfull", customerExist });
+    } else {
+      res.status(400).json({ status: false, message: "Bad request" });
+    }
+  } catch (err) {
+    res.status(400).json({ status: false, message: "Something went wrong!", error:err});
+  }
+};
 
 // const bcrypt = require("bcryptjs");
 // const nodemailer = require("nodemailer");
@@ -550,7 +561,7 @@ exports.resetPassword = function (req, res) {
 //       },
 //     });
 //     const mailOption = {
-//       from: process.env.SAN_EMAIL, 
+//       from: process.env.SAN_EMAIL,
 //       to: email,
 //       subject: "Reset Password",
 //       html: `<h1>Hello ${name}!!</h1>
@@ -615,8 +626,6 @@ exports.resetPassword = function (req, res) {
 //     res.status(400).send({ success: false, message: err.message });
 //   }
 // };
-
-
 
 // // update verifcation details
 // exports.verifyCustomerDetails = async function (req, res) {

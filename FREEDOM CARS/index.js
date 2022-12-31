@@ -147,7 +147,7 @@ loadImage("./freedomcars.png").then((image) => {
   context.textAlign = "left";
   context.fillText("4500", 1140, 834);
 
-  //Laptop or bike or ..
+  //Laptop or bike or cash ..
   context.fillStyle = "#000";
   context.font = "25px Lato-Black";
   context.textAlign = "left";
